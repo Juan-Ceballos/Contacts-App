@@ -58,7 +58,30 @@ extension Contact {
         }
         return contacts
     }
+    
+    static func alphebeticalContacts(contacts: [Contact]) -> [[Contact]] {
+        
+        let sortedContacts = contacts.sorted {$0.lastName < $1.lastName}
+        
+        // section titles, need alphabet comparison, or count of section titles for empty sections
+        var sectionsArr = Array(repeating: [Contact](), count: 25)
+        // [[], [], [], ...]
+        var currentIndex = 0
+        var currentLetter = sortedContacts.first?.lastName.first
+        for element in sortedContacts {
+            if element.lastName.first == currentLetter {
+                sectionsArr[currentIndex].append(element)
+            } else {
+                currentIndex += 1
+                currentLetter = element.lastName.first
+                sectionsArr[currentIndex].append(element)
+            }
+        }
+        return sectionsArr
+    }
 }
+
+
 
 // Array of Contacts object
 // list of contacts in a tableview
