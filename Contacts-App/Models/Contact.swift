@@ -61,21 +61,23 @@ extension Contact {
     
     static func alphebeticalContacts(contacts: [Contact]) -> [[Contact]] {
         
-        let sortedContacts = contacts.sorted {$0.lastName < $1.lastName}
-        
+        let sortedContacts = contacts.sorted {$0.lastName.lowercased() < $1.lastName.lowercased()}
+        print(sortedContacts)
         // section titles, need alphabet comparison, or count of section titles for empty sections
-        var sectionsArr = Array(repeating: [Contact](), count: 25)
+        let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
         // [[], [], [], ...]
         var currentIndex = 0
         var currentLetter = sortedContacts.first?.lastName.first
+        var currentAlphabetSection = sectionTitles[currentIndex]
+        // connor
         for element in sortedContacts {
-            if element.lastName.first == currentLetter {
-                sectionsArr[currentIndex].append(element)
-            } else {
+            while element.lastName.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
                 currentIndex += 1
-                currentLetter = element.lastName.first
-                sectionsArr[currentIndex].append(element)
+                currentAlphabetSection = sectionTitles[currentIndex]
             }
+            currentLetter = element.lastName.first
+            sectionsArr[currentIndex].append(element)
         }
         return sectionsArr
     }
