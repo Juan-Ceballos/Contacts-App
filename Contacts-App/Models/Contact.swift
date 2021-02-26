@@ -31,7 +31,7 @@ extension Contact {
         let contactsDict = [03364152046: ("Christin", "Böttger"),
                             927525456: ("Joaquin", "Bravo"),
                             6868840334: ("David", "Edwards"),
-                            07905753: ("Roope", "Mattila"),
+                            07905753: ("Roope", "Zattila"),
                             27991860: ("Lærke", "Wist"),
                             957021797: ("Jonathan", "Diez"),
                             01768757320: ("Emily", "Long"),

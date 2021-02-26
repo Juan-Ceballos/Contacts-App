@@ -108,7 +108,7 @@ class ContactsViewController: UIViewController {
         snapshot.appendItems(sortedContacts[22], toSection: .w)
         snapshot.appendItems(sortedContacts[23], toSection: .x)
         snapshot.appendItems(sortedContacts[24], toSection: .y)
-        //snapshot.appendItems(sortedContacts[25], toSection: .z)
+        snapshot.appendItems(sortedContacts[25], toSection: .z)
         
         
         
