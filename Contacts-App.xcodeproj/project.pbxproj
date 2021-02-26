@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1F8A6125E9B24F0072195B /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1F8A6025E9B24F0072195B /* AddContactViewController.swift */; };
 		3E3A92972567000800C4CFF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A92962567000800C4CFF4 /* AppDelegate.swift */; };
 		3E3A92992567000800C4CFF4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A92982567000800C4CFF4 /* SceneDelegate.swift */; };
 		3E3A929B2567000800C4CFF4 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A929A2567000800C4CFF4 /* ContactsViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E1F8A6025E9B24F0072195B /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		3E3A92932567000800C4CFF4 /* Contacts-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contacts-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E3A92962567000800C4CFF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E3A92982567000800C4CFF4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				3E3A929A2567000800C4CFF4 /* ContactsViewController.swift */,
+				3E1F8A6025E9B24F0072195B /* AddContactViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				3E3A929B2567000800C4CFF4 /* ContactsViewController.swift in Sources */,
 				3E3A92972567000800C4CFF4 /* AppDelegate.swift in Sources */,
 				3E3A92DF25670F8D00C4CFF4 /* ContactsView.swift in Sources */,
+				3E1F8A6125E9B24F0072195B /* AddContactViewController.swift in Sources */,
 				3E3A92992567000800C4CFF4 /* SceneDelegate.swift in Sources */,
 				3E61034D258C083100FD53D0 /* HeaderView.swift in Sources */,
 				3E72F58E2591D0C10011AAA3 /* FileManager.swift in Sources */,

@@ -26,11 +26,15 @@ class ContactsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.title = "Contacts"
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: nil)
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addContactButtonPressed))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         configureCollectionView()
         configureDataSource()
         fetchContacts()
+    }
+    
+    @objc private func addContactButtonPressed() {
+        navigationController?.pushViewController(AddContactViewController(), animated: true)
     }
     
     private func configureDataSource() {
