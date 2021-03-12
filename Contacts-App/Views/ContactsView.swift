@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum SectionKind: Int, CaseIterable {
+public enum SectionKind: Int, CaseIterable {    
     case a
     case b
     case c
