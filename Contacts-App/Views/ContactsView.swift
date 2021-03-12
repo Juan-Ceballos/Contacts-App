@@ -97,32 +97,16 @@ public enum SectionKind: Int, CaseIterable {
 class ContactsView: UIView {
     
     public lazy var contactsCollectionView: UICollectionView = {
-        let layout = createLayout2()
+        let layout = createLayout()
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         cv.backgroundColor = .systemGroupedBackground
         return cv
     }()
     
-    public func createLayout() -> UICollectionViewLayout {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.07))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        
-        return layout
-        
-    }
-    
-    private func createLayout2() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
-            guard let sectionKind = SectionKind(rawValue: sectionIndex) else {
+            guard SectionKind(rawValue: sectionIndex) != nil else {
                 fatalError()
             }
             

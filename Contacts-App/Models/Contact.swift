@@ -68,7 +68,6 @@ extension Contact {
         var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
         // [[], [], [], ...]
         var currentIndex = 0
-        var currentLetter = sortedContacts.first?.lastName.first
         var currentAlphabetSection = sectionTitles[currentIndex]
         // connor
         for element in sortedContacts {
@@ -76,7 +75,6 @@ extension Contact {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
-            currentLetter = element.lastName.first
             sectionsArr[currentIndex].append(element)
         }
         return sectionsArr
