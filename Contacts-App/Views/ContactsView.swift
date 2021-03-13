@@ -99,12 +99,15 @@ class ContactsView: UIView {
     public lazy var contactsCollectionView: UICollectionView = {
         let layout = createLayout()
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .systemGroupedBackground
+        //cv.backgroundColor = .systemGray3
+        
         return cv
     }()
     
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            //let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             
             guard SectionKind(rawValue: sectionIndex) != nil else {
                 fatalError()
@@ -113,6 +116,7 @@ class ContactsView: UIView {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.07))
             
@@ -127,7 +131,6 @@ class ContactsView: UIView {
             section.boundarySupplementaryItems = [header]
             
             return section
-            
         }
         
         return layout
