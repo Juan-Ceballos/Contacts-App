@@ -13,11 +13,14 @@ class ContactCell: UICollectionViewCell {
     
     public lazy var fullNameLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: "GillSans", size: 20)
+        
         return label
     }()
     
     public lazy var numberLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: "GillSans", size: 24)
         return label
     }()
     
@@ -33,7 +36,7 @@ class ContactCell: UICollectionViewCell {
     
     private func commonInit()   {
         setupFullNameLabelConstraints()
-        setupNumberLabelConstraints()
+        //setupNumberLabelConstraints()
     }
     
     private func setupFullNameLabelConstraints() {

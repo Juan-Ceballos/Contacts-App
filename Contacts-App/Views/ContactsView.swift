@@ -94,12 +94,26 @@ public enum SectionKind: Int, CaseIterable {
     }
 }
 
+final class BackgroundSupplementaryView: UICollectionReusableView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        layer.cornerRadius = 8
+        backgroundColor = .systemFill
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class ContactsView: UIView {
     
     public lazy var contactsCollectionView: UICollectionView = {
         let layout = createLayout()
+        layout.register(BackgroundSupplementaryView.self, forDecorationViewOfKind: "background")
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        //cv.backgroundColor = .systemGray3
         
         return cv
     }()
@@ -107,11 +121,8 @@ class ContactsView: UIView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
-            //let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-            
-            guard SectionKind(rawValue: sectionIndex) != nil else {
-                fatalError()
-            }
+            let sectionInset: CGFloat = 32
+            let backgroundInset: CGFloat = 22
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             
@@ -121,14 +132,25 @@ class ContactsView: UIView {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.07))
             
             let groupA = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            
             let section = NSCollectionLayoutSection(group: groupA)
+            
+            
+            section.contentInsets = NSDirectionalEdgeInsets(top: sectionInset, leading: sectionInset, bottom: sectionInset, trailing: sectionInset)
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
             
-            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
             
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+            header.extendsBoundary = false
+            
+            let backgroundItem = NSCollectionLayoutDecorationItem.background(elementKind: "background")
+            guard SectionKind(rawValue: sectionIndex) != nil else {
+                fatalError()
+            }
+                        
             section.boundarySupplementaryItems = [header]
+            backgroundItem.contentInsets = NSDirectionalEdgeInsets(top: backgroundInset, leading: backgroundInset, bottom: backgroundInset, trailing: backgroundInset)
+            section.decorationItems = [backgroundItem]
             
             return section
         }
