@@ -31,6 +31,7 @@ class ContactsViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         fetchContacts()
+        contactsView.contactsCollectionView.delegate = self
     }
     
     @objc private func addContactButtonPressed() {
@@ -49,7 +50,6 @@ class ContactsViewController: UIViewController {
             cell.fullNameLabel.underline()
             cell.fullNameLabel.textColor = .white
             cell.numberLabel.textColor = .white
-            //cell.backgroundColor = .systemFill
             return cell
         })
         
@@ -116,3 +116,14 @@ class ContactsViewController: UIViewController {
     
 }
 
+extension ContactsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailContactsVC = DetailContactsViewController()
+        
+        guard let contact = datasource.itemIdentifier(for: indexPath) else {
+            fatalError()
+        }
+        
+        self.navigationController?.pushViewController(detailContactsVC, animated: true)
+    }
+}
