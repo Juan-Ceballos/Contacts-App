@@ -14,7 +14,6 @@ class ContactCell: UICollectionViewCell {
     public lazy var fullNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "GillSans", size: 20)
-        
         return label
     }()
     
@@ -22,6 +21,12 @@ class ContactCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont(name: "GillSans", size: 24)
         return label
+    }()
+    
+    public lazy var cellDividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -37,6 +42,7 @@ class ContactCell: UICollectionViewCell {
     private func commonInit()   {
         setupFullNameLabelConstraints()
         //setupNumberLabelConstraints()
+        setupCellDividerViewConstraints()
     }
     
     private func setupFullNameLabelConstraints() {
@@ -56,6 +62,18 @@ class ContactCell: UICollectionViewCell {
             numberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             numberLabel.leadingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor, constant: 8),
             numberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
+        ])
+    }
+    
+    private func setupCellDividerViewConstraints() {
+        addSubview(cellDividerView)
+        cellDividerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cellDividerView.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 11),
+            cellDividerView.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            cellDividerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cellDividerView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.025)
+        
         ])
     }
     

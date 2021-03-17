@@ -47,7 +47,6 @@ class ContactsViewController: UIViewController {
             
             cell.fullNameLabel.text = contact.fullName
             cell.numberLabel.text = contact.number.description
-            cell.fullNameLabel.underline()
             cell.fullNameLabel.textColor = .white
             cell.numberLabel.textColor = .white
             return cell
