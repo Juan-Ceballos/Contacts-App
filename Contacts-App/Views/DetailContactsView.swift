@@ -11,6 +11,7 @@ class DetailContactsView: UIView {
     
     override func layoutSubviews() {
         // rounded corner for container detailview
+        detailContainerView.layer.cornerRadius = 8
     }
     
     public lazy var detailContainerView: UIView = {
@@ -46,6 +47,9 @@ class DetailContactsView: UIView {
     
     private func commonInit()   {
         setupDetailCointainerViewConstraints()
+        setupFullNameTextLabelConstraints()
+        setupPhoneNumberTextLabelConstraints()
+        setupPhoneImageViewConstraints()
     }
     
     private func setupDetailCointainerViewConstraints() {
@@ -60,11 +64,35 @@ class DetailContactsView: UIView {
     }
     
     private func setupFullNameTextLabelConstraints() {
+        addSubview(fullNameTextLabel)
+        fullNameTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            fullNameTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            fullNameTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            fullNameTextLabel.centerYAnchor.constraint(equalTo: detailContainerView.centerYAnchor)
         
+        ])
+    }
+    
+    private func setupPhoneNumberTextLabelConstraints() {
+        addSubview(phoneNumberTextLabel)
+        phoneNumberTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            phoneNumberTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            phoneNumberTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            phoneNumberTextLabel.topAnchor.constraint(equalTo: fullNameTextLabel.bottomAnchor, constant: 8)
+        
+        ])
     }
     
     private func setupPhoneImageViewConstraints() {
+        addSubview(phoneImageView)
+        phoneImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            phoneImageView.centerXAnchor.constraint(equalTo: detailContainerView.centerXAnchor),
+            phoneImageView.topAnchor.constraint(equalTo: phoneNumberTextLabel.bottomAnchor, constant: 8)
         
+        ])
     }
     
 }

@@ -117,11 +117,15 @@ class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailContactsVC = DetailContactsViewController()
         
         guard let contact = datasource.itemIdentifier(for: indexPath) else {
             fatalError()
         }
+        
+        let fullName = contact.fullName
+        let phoneNumber = contact.number
+        
+        let detailContactsVC = DetailContactsViewController(fullName: fullName, phoneNumber: phoneNumber)
         
         self.navigationController?.pushViewController(detailContactsVC, animated: true)
     }
