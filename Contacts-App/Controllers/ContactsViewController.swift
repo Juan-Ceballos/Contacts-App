@@ -24,7 +24,7 @@ class ContactsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         navigationItem.title = "Contacts"
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addContactButtonPressed))
         navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -49,6 +49,7 @@ class ContactsViewController: UIViewController {
             cell.numberLabel.text = contact.number.description
             cell.fullNameLabel.textColor = .white
             cell.numberLabel.textColor = .white
+            cell.initialsLabel.text = String(contact.firstName.first ?? " ") + String(contact.lastName.first ?? " ")
             return cell
         })
         

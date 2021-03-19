@@ -11,6 +11,30 @@ class ContactCell: UICollectionViewCell {
     
     static let reuseIdentifier = "contactCell"
     
+    override func layoutSubviews() {
+
+        contactPhotoView.layer.borderWidth = 1
+        contactPhotoView.layer.masksToBounds = false
+        contactPhotoView.layer.borderColor = UIColor.black.cgColor
+        contactPhotoView.layer.cornerRadius = contactPhotoView.frame.width/2.25
+        contactPhotoView.clipsToBounds = true
+        
+    }
+    
+    public lazy var contactPhotoView: UIView = {
+        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width * 0.125, height: self.frame.width * 0.125))
+        uiView.backgroundColor = .orange
+        return uiView
+    }()
+    
+    public lazy var initialsLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont(name: "GillSans", size: 22)
+        label.textColor = .white
+        return label
+    }()
+    
     public lazy var fullNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "GillSans", size: 20)
@@ -40,9 +64,36 @@ class ContactCell: UICollectionViewCell {
     }
     
     private func commonInit()   {
+        setupContactPhotoImageViewConstraints()
+        setupInitialsLabelConstraints()
         setupFullNameLabelConstraints()
         //setupNumberLabelConstraints()
         setupCellDividerViewConstraints()
+    }
+    
+    private func setupContactPhotoImageViewConstraints() {
+        addSubview(contactPhotoView)
+        contactPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            contactPhotoView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            contactPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            contactPhotoView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contactPhotoView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.125),
+            contactPhotoView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.125)
+            
+        ])
+    }
+    
+    private func setupInitialsLabelConstraints() {
+        addSubview(initialsLabel)
+        initialsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            initialsLabel.centerYAnchor.constraint(equalTo: contactPhotoView.centerYAnchor),
+            initialsLabel.centerXAnchor.constraint(equalTo: contactPhotoView.centerXAnchor)
+        
+        ])
     }
     
     private func setupFullNameLabelConstraints() {
@@ -50,7 +101,7 @@ class ContactCell: UICollectionViewCell {
         fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             fullNameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            fullNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
+            fullNameLabel.leadingAnchor.constraint(equalTo: contactPhotoView.trailingAnchor, constant: 8),
             fullNameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
         ])
     }

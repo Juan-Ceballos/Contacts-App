@@ -12,6 +12,8 @@ struct Contact: Hashable {
     let firstName: String
     let lastName: String
     let number: Int
+    let address = "123 Baker st"
+    let email = "juanceb@email.com"
     var fullName: String {
         return "\(firstName), \(lastName)"
     }
@@ -61,7 +63,7 @@ extension Contact {
     
     static func alphebeticalContacts(contacts: [Contact]) -> [[Contact]] {
         
-        let sortedContacts = contacts.sorted {$0.lastName.lowercased() < $1.lastName.lowercased()}
+        let sortedContacts = contacts.sorted {$0.firstName.lowercased() < $1.firstName.lowercased()}
         print(sortedContacts)
         // section titles, need alphabet comparison, or count of section titles for empty sections
         let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -71,7 +73,7 @@ extension Contact {
         var currentAlphabetSection = sectionTitles[currentIndex]
         // connor
         for element in sortedContacts {
-            while element.lastName.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
+            while element.firstName.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }

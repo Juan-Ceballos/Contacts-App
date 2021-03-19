@@ -34,6 +34,7 @@ class DetailContactsViewController: UIViewController {
     }
     
     private func setupUI() {
+        view.backgroundColor = .systemBackground
         detailContactsView.fullNameTextLabel.text = fullName
         detailContactsView.phoneNumberTextLabel.text = String(phoneNumber)
         detailContactsView.fullNameTextLabel.textColor = .systemBackground

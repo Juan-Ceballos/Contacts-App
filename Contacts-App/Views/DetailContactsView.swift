@@ -14,6 +14,12 @@ class DetailContactsView: UIView {
         detailContainerView.layer.cornerRadius = 8
     }
     
+    public lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
     public lazy var detailContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemFill
@@ -30,9 +36,11 @@ class DetailContactsView: UIView {
         return label
     }()
     
-    public lazy var phoneImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
+    public lazy var phoneImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        button.tintColor = .systemGreen
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -46,10 +54,24 @@ class DetailContactsView: UIView {
     }
     
     private func commonInit()   {
+        setupBackgroundViewConstraints()
         setupDetailCointainerViewConstraints()
         setupFullNameTextLabelConstraints()
         setupPhoneNumberTextLabelConstraints()
         setupPhoneImageViewConstraints()
+    }
+    
+    private func setupBackgroundViewConstraints() {
+        addSubview(backgroundView)
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            backgroundView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        
+        ])
     }
     
     private func setupDetailCointainerViewConstraints() {
@@ -86,11 +108,13 @@ class DetailContactsView: UIView {
     }
     
     private func setupPhoneImageViewConstraints() {
-        addSubview(phoneImageView)
-        phoneImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(phoneImageButton)
+        phoneImageButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            phoneImageView.centerXAnchor.constraint(equalTo: detailContainerView.centerXAnchor),
-            phoneImageView.topAnchor.constraint(equalTo: phoneNumberTextLabel.bottomAnchor, constant: 8)
+            phoneImageButton.centerXAnchor.constraint(equalTo: detailContainerView.centerXAnchor),
+            phoneImageButton.topAnchor.constraint(equalTo: phoneNumberTextLabel.bottomAnchor, constant: 8),
+            phoneImageButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
+            phoneImageButton.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1)
         
         ])
     }
