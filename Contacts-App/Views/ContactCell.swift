@@ -16,13 +16,13 @@ class ContactCell: UICollectionViewCell {
         contactPhotoView.layer.borderWidth = 1
         contactPhotoView.layer.masksToBounds = false
         contactPhotoView.layer.borderColor = UIColor.black.cgColor
-        contactPhotoView.layer.cornerRadius = contactPhotoView.frame.width/2.25
+        contactPhotoView.layer.cornerRadius = contactPhotoView.frame.size.height/2
         contactPhotoView.clipsToBounds = true
         
     }
     
     public lazy var contactPhotoView: UIView = {
-        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width * 0.125, height: self.frame.width * 0.125))
+        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.frame.size.height * 0.7, height: contentView.frame.size.height * 0.7))
         uiView.backgroundColor = .orange
         return uiView
     }()
@@ -78,9 +78,10 @@ class ContactCell: UICollectionViewCell {
         
             contactPhotoView.centerYAnchor.constraint(equalTo: centerYAnchor),
             contactPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            contactPhotoView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contactPhotoView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.125),
-            contactPhotoView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.125)
+            contactPhotoView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            contactPhotoView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            contactPhotoView.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
+            contactPhotoView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7)
             
         ])
     }
