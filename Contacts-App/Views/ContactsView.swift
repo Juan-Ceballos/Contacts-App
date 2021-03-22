@@ -114,7 +114,7 @@ class ContactsView: UIView {
         let layout = createLayout()
         layout.register(BackgroundSupplementaryView.self, forDecorationViewOfKind: "background")
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        
+        cv.backgroundColor = .systemBackground
         return cv
     }()
     

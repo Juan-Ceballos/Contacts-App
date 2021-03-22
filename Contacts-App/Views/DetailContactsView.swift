@@ -11,7 +11,7 @@ class DetailContactsView: UIView {
     
     override func layoutSubviews() {
         // rounded corner for container detailview
-        detailContainerView.layer.cornerRadius = 8
+        detailContainerView.roundCorners()
     }
     
     public lazy var backgroundView: UIView = {

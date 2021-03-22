@@ -13,7 +13,7 @@ class Contacts_AppTests: XCTestCase {
     func testCreateContactsArray() {
         let expContactsCount = 20
         
-        let contacts = Contact.createContactsArray()
+        let contacts = ContactHC.createContactsArray()
         
         XCTAssertEqual(expContactsCount, contacts.count)
     }

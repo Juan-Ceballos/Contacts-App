@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Contact: Hashable {
+struct ContactHC: Hashable {
     
     let firstName: String
     let lastName: String
@@ -27,8 +27,8 @@ struct Contact: Hashable {
     
 }
 
-extension Contact {
-    static func createContactsArray() -> [Contact] {
+extension ContactHC {
+    static func createContactsArray() -> [ContactHC] {
         
         let contactsDict = [03364152046: ("Christin", "Böttger"),
                             927525456: ("Joaquin", "Bravo"),
@@ -52,22 +52,22 @@ extension Contact {
                             00499228235: ("Marissa", "Rode"),
         ]
         
-        var contacts = [Contact]()
+        var contacts = [ContactHC]()
     
         for (number, (first, last)) in contactsDict {
-            let newContact = Contact(fName: first, lName: last, number: number)
+            let newContact = ContactHC(fName: first, lName: last, number: number)
             contacts.append(newContact)
         }
         return contacts
     }
     
-    static func alphebeticalContacts(contacts: [Contact]) -> [[Contact]] {
+    static func alphebeticalContacts(contacts: [ContactHC]) -> [[ContactHC]] {
         
         let sortedContacts = contacts.sorted {$0.firstName.lowercased() < $1.firstName.lowercased()}
         print(sortedContacts)
         // section titles, need alphabet comparison, or count of section titles for empty sections
         let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
+        var sectionsArr = Array(repeating: [ContactHC](), count: sectionTitles.count)
         // [[], [], [], ...]
         var currentIndex = 0
         var currentAlphabetSection = sectionTitles[currentIndex]

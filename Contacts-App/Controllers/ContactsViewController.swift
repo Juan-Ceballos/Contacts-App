@@ -19,13 +19,13 @@ class ContactsViewController: UIViewController {
         case main
     }
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<SectionKind, Contact>
+    private typealias DataSource = UICollectionViewDiffableDataSource<SectionKind, ContactHC>
     private var datasource: DataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = "Contacts"
+        navigationItem.title = NSLocalizedString("Contacts", comment: "Title of the Navigation Bar")
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addContactButtonPressed))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         configureCollectionView()
@@ -39,7 +39,7 @@ class ContactsViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        datasource = UICollectionViewDiffableDataSource<SectionKind, Contact>(collectionView: contactsView.contactsCollectionView, cellProvider: { (collectionView, indexPath, contact) -> UICollectionViewCell? in
+        datasource = UICollectionViewDiffableDataSource<SectionKind, ContactHC>(collectionView: contactsView.contactsCollectionView, cellProvider: { (collectionView, indexPath, contact) -> UICollectionViewCell? in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else {
                 fatalError()
@@ -47,16 +47,14 @@ class ContactsViewController: UIViewController {
             
             cell.fullNameLabel.text = contact.fullName
             cell.numberLabel.text = contact.number.description
-            cell.fullNameLabel.textColor = .white
-            cell.numberLabel.textColor = .white
             cell.initialsLabel.text = String(contact.firstName.first ?? " ") + String(contact.lastName.first ?? " ")
             return cell
         })
         
         var snapshot = datasource.snapshot()
         var sectionsArr = [SectionKind]()
-        let contacts = Contact.createContactsArray()
-        let sortedContacts = Contact.alphebeticalContacts(contacts: contacts)
+        let contacts = ContactHC.createContactsArray()
+        let sortedContacts = ContactHC.alphebeticalContacts(contacts: contacts)
         for num in 0...25 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
@@ -72,7 +70,7 @@ class ContactsViewController: UIViewController {
             headerView.textLabel.text = sectionsArr[indexPath.section].sectionTitle
             headerView.textLabel.textAlignment = .left
             headerView.textLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-            headerView.textLabel.textColor = .white
+            headerView.textLabel.textColor = UIColor(named: "MyTextColor")
             
             return headerView
         }
@@ -82,15 +80,15 @@ class ContactsViewController: UIViewController {
     }
     
     private func fetchContacts() {
-        let contacts = Contact.createContactsArray()
+        let contacts = ContactHC.createContactsArray()
         updateSnapshot(contacts: contacts)
     }
     
-    private func updateSnapshot(contacts: [Contact]) {
+    private func updateSnapshot(contacts: [ContactHC]) {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
         
-        let sortedContacts = Contact.alphebeticalContacts(contacts: contacts)
+        let sortedContacts = ContactHC.alphebeticalContacts(contacts: contacts)
         var sectionsArr = [SectionKind]()
 
         for num in 0...25 {
