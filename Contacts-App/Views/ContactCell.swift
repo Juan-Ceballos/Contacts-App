@@ -18,7 +18,7 @@ class ContactCell: UICollectionViewCell {
     }
     
     public lazy var contactPhotoView: UIView = {
-        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.frame.size.height * 0.8, height: contentView.frame.size.height * 0.8))
+        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.frame.size.height * 0.85, height: contentView.frame.size.height * 0.85))
         uiView.backgroundColor = UIColor(named: "MyBubbleColor")
         return uiView
     }()
@@ -26,7 +26,7 @@ class ContactCell: UICollectionViewCell {
     public lazy var initialsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial Bold", size: 22)
+        label.font = UIFont(name: "Arial Bold", size: 18)
         label.textColor = UIColor(named: "MyTextColor")
         return label
     }()
@@ -64,7 +64,6 @@ class ContactCell: UICollectionViewCell {
         setupContactPhotoImageViewConstraints()
         setupInitialsLabelConstraints()
         setupFullNameLabelConstraints()
-        //setupNumberLabelConstraints()
         setupCellDividerViewConstraints()
     }
     
@@ -77,8 +76,8 @@ class ContactCell: UICollectionViewCell {
             contactPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             contactPhotoView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             contactPhotoView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            contactPhotoView.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.8),
-            contactPhotoView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.8)
+            contactPhotoView.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.85),
+            contactPhotoView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.85)
             
         ])
     }
@@ -101,16 +100,6 @@ class ContactCell: UICollectionViewCell {
             fullNameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             fullNameLabel.leadingAnchor.constraint(equalTo: contactPhotoView.trailingAnchor, constant: 8),
             fullNameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
-        ])
-    }
-    
-    private func setupNumberLabelConstraints() {
-        addSubview(numberLabel)
-        numberLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            numberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            numberLabel.leadingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor, constant: 8),
-            numberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
         ])
     }
     

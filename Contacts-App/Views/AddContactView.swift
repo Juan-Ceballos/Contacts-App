@@ -42,6 +42,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "First"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -49,6 +50,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Last"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -64,6 +66,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Digits"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -79,6 +82,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Johny@example.com"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -94,6 +98,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Street Address"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -101,6 +106,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "apt"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -108,6 +114,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "City"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -115,6 +122,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "State"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -122,6 +130,7 @@ class AddContactView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Zip Code"
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -159,7 +168,7 @@ class AddContactView: UIView {
         setupCityTextFieldConstraints()
         setupStateTextFieldConstraints()
         setupZipTextFieldConstraints()
-        setupSomeViewConstraints()
+        //setupSomeViewConstraints()
     }
     
     private func setupScrollViewConstraints() {
@@ -218,7 +227,7 @@ class AddContactView: UIView {
         
             lastNameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 11),
             lastNameTextField.leadingAnchor.constraint(equalTo: firstNameTextField.trailingAnchor, constant: 11),
-            lastNameTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3)
+            lastNameTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
     
         ])
     }
@@ -336,7 +345,7 @@ class AddContactView: UIView {
             zipTextField.topAnchor.constraint(equalTo: cityTextField.bottomAnchor, constant: 11),
             zipTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 11),
             zipTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
-            //zipTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -11)
+            zipTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -11)
         ])
     }
     
@@ -348,7 +357,7 @@ class AddContactView: UIView {
             someView.topAnchor.constraint(equalTo: zipTextField.bottomAnchor, constant: 11),
             someView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 11),
             someView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
-            someView.heightAnchor.constraint(equalToConstant: 400),
+            someView.heightAnchor.constraint(equalToConstant: 200),
             someView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -11)
             
         ])

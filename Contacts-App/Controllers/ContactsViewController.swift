@@ -47,7 +47,7 @@ class ContactsViewController: UIViewController {
             
             cell.fullNameLabel.text = contact.fullName
             cell.numberLabel.text = contact.number.description
-            cell.initialsLabel.text = String(contact.firstName.first ?? " ") + String(contact.lastName.first ?? " ")
+            cell.initialsLabel.text = String(contact.firstName.first?.uppercased() ?? " ") + String(contact.lastName.first?.uppercased() ?? " ")
             return cell
         })
         

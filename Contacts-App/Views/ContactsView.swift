@@ -114,6 +114,7 @@ class ContactsView: UIView {
         let layout = createLayout()
         layout.register(BackgroundSupplementaryView.self, forDecorationViewOfKind: "background")
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.contentInset = .init(top: 11, left: 0, bottom: 0, right: 0)
         cv.backgroundColor = .systemBackground
         return cv
     }()
@@ -137,6 +138,7 @@ class ContactsView: UIView {
             
             section.contentInsets = NSDirectionalEdgeInsets(top: sectionInset, leading: sectionInset, bottom: sectionInset, trailing: sectionInset)
             
+            
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
             
             
@@ -151,6 +153,7 @@ class ContactsView: UIView {
             section.boundarySupplementaryItems = [header]
             backgroundItem.contentInsets = NSDirectionalEdgeInsets(top: backgroundInset, leading: backgroundInset, bottom: backgroundInset, trailing: backgroundInset)
             section.decorationItems = [backgroundItem]
+            
             
             return section
         }

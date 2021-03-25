@@ -23,7 +23,7 @@ class CoreDataManager {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firtName = firstName
         contact.lastName = lastName
-        contact.fullName = "\(lastName) \(firstName)"
+        contact.fullName = "\(firstName) \(lastName)"
         contact.email = email
         contact.address = address
         contact.poNumber = poNumber
