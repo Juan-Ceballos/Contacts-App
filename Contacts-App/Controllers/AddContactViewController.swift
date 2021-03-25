@@ -113,3 +113,12 @@ extension AddContactViewController: UITextFieldDelegate {
     }
     
 }
+
+class ScrollView: UIScrollView {
+  override func touchesShouldCancel(in view: UIView) -> Bool {
+    if type(of: view) == UITextField.self || type(of: view) == UITextView.self {
+      return true
+    }
+    return super.touchesShouldCancel(in: view)
+  }
+}

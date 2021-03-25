@@ -13,8 +13,8 @@ class AddContactView: UIView {
         containerView.roundCorners()
     }
     
-    public lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
+    public lazy var scrollView: ScrollView = {
+        let scrollView = ScrollView()
         scrollView.backgroundColor = .systemBackground
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         scrollView.contentInset = UIEdgeInsets.zero
