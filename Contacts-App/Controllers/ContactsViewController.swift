@@ -19,7 +19,7 @@ class ContactsViewController: UIViewController {
         case main
     }
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<SectionKind, ContactHC>
+    private typealias DataSource = UICollectionViewDiffableDataSource<SectionKind, Contact>
     private var datasource: DataSource!
     
     override func viewDidLoad() {
@@ -39,22 +39,22 @@ class ContactsViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        datasource = UICollectionViewDiffableDataSource<SectionKind, ContactHC>(collectionView: contactsView.contactsCollectionView, cellProvider: { (collectionView, indexPath, contact) -> UICollectionViewCell? in
+        datasource = UICollectionViewDiffableDataSource<SectionKind, Contact>(collectionView: contactsView.contactsCollectionView, cellProvider: { (collectionView, indexPath, contact) -> UICollectionViewCell? in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else {
                 fatalError()
             }
             
             cell.fullNameLabel.text = contact.fullName
-            cell.numberLabel.text = contact.number.description
-            cell.initialsLabel.text = String(contact.firstName.first?.uppercased() ?? " ") + String(contact.lastName.first?.uppercased() ?? " ")
+            cell.numberLabel.text = contact.poNumber?.description
+            cell.initialsLabel.text = String(contact.firtName?.first?.uppercased() ?? " ") + String(contact.lastName?.first?.uppercased() ?? " ")
             return cell
         })
         
         var snapshot = datasource.snapshot()
         var sectionsArr = [SectionKind]()
-        let contacts = ContactHC.createContactsArray()
-        let sortedContacts = ContactHC.alphebeticalContacts(contacts: contacts)
+        //let sortedContacts = CoreDataManager.shared.fetchContact()
+        let sortedContacts = CoreDataManager.shared.sectionContacts()//Contact.alphebeticalContacts(contacts: contacts)
         for num in 0...25 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
@@ -80,15 +80,15 @@ class ContactsViewController: UIViewController {
     }
     
     private func fetchContacts() {
-        let contacts = ContactHC.createContactsArray()
-        updateSnapshot(contacts: contacts)
+        //let contacts = CoreDataManager.shared.fetchContact()//ContactHC.createContactsArray()
+        updateSnapshot()
     }
     
-    private func updateSnapshot(contacts: [ContactHC]) {
+    private func updateSnapshot() {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
         
-        let sortedContacts = ContactHC.alphebeticalContacts(contacts: contacts)
+        let sortedContacts = CoreDataManager.shared.sectionContacts()//ContactHC.alphebeticalContacts(contacts: contacts)
         var sectionsArr = [SectionKind]()
 
         for num in 0...25 {
@@ -121,8 +121,8 @@ extension ContactsViewController: UICollectionViewDelegate {
             fatalError()
         }
         
-        let fullName = contact.fullName
-        let phoneNumber = contact.number
+        let fullName = contact.fullName!
+        let phoneNumber = contact.poNumber!
         
         let detailContactsVC = DetailContactsViewController(fullName: fullName, phoneNumber: phoneNumber)
         

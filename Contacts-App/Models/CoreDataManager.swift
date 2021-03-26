@@ -13,7 +13,7 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
     
-    private var contacts = [Contact]()
+    private var sortedContacts = [Contact]()
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -38,12 +38,41 @@ class CoreDataManager {
     }
     
     public func fetchContact() -> [Contact] {
+        
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let sort = NSSortDescriptor(key: #keyPath(Contact.firtName), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
         do {
-            contacts = try context.fetch(Contact.fetchRequest())
+            sortedContacts = try context.fetch(fetchRequest)
+            
         } catch {
             print("fetching contacts from context")
         }
         
-        return contacts
+        return sortedContacts
+    }
+    
+    public func sectionContacts() -> [[Contact]] {
+        let sortedContacts = fetchContact()
+        
+        let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        
+        var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
+        
+        var currentIndex = 0
+        var currentAlphabetSection = sectionTitles[currentIndex]
+        
+        for element in sortedContacts {
+            while element.firtName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
+                currentIndex += 1
+                currentAlphabetSection = sectionTitles[currentIndex]
+            }
+            sectionsArr[currentIndex].append(element)
+        }
+        return sectionsArr
+        
     }
 }
+
+

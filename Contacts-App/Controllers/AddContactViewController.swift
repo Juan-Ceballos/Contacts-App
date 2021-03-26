@@ -63,7 +63,6 @@ class AddContactViewController: UIViewController {
         saveToolBar.sizeToFit()
         
         addContactView.firstNameTextField.inputAccessoryView = saveToolBar
-        addContactView.firstNameTextField.inputAccessoryView = saveToolBar
         addContactView.lastNameTextField.inputAccessoryView = saveToolBar
         addContactView.zipTextField.inputAccessoryView = saveToolBar
         addContactView.stateTextField.inputAccessoryView = saveToolBar
@@ -78,10 +77,27 @@ class AddContactViewController: UIViewController {
         print("Save button pressed")
         let arr = CoreDataManager.shared.fetchContact()
         print(arr[0].fullName ?? "No Name")
+        guard let firstNameEntry = addContactView.firstNameTextField.text, !firstNameEntry.isEmpty,
+              let lastNameEntry = addContactView.lastNameTextField.text, !lastNameEntry.isEmpty,
+              let zipTextFieldEntry = addContactView.zipTextField.text, !zipTextFieldEntry.isEmpty,
+              let stateTextFieldEntry = addContactView.stateTextField.text, !stateTextFieldEntry.isEmpty,
+              let cityTextFieldEntry = addContactView.cityTextField.text, !cityTextFieldEntry.isEmpty,
+              let poNumberTextFieldEntry = addContactView.poNumberTextField.text, !poNumberTextFieldEntry.isEmpty,
+              let streetTextFieldEntry = addContactView.streetTextField.text, !streetTextFieldEntry.isEmpty,
+              let aptTextFieldEntry = addContactView.aptTextField.text, !aptTextFieldEntry.isEmpty,
+              let emailTextFieldEntry = addContactView.emailTextField.text, !emailTextFieldEntry.isEmpty else {
+            self.showAlert(title: "Error", message: "Missing Fields")
+            return
+        }
+        
+        let newContact = CoreDataManager.shared.createContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry)
+        
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     @objc func cancelButtonPressed() {
-        print("Cancel button pressed")
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setupTextField() {
@@ -121,4 +137,5 @@ class ScrollView: UIScrollView {
     }
     return super.touchesShouldCancel(in: view)
   }
+    
 }

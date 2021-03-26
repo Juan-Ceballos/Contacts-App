@@ -10,9 +10,9 @@ import UIKit
 class DetailContactsViewController: UIViewController {
     
     var fullName: String
-    var phoneNumber: Int
+    var phoneNumber: String
     
-    init(fullName: String, phoneNumber: Int) {
+    init(fullName: String, phoneNumber: String) {
         self.fullName = fullName
         self.phoneNumber = phoneNumber
         super.init(nibName: nil, bundle: nil)
@@ -36,7 +36,7 @@ class DetailContactsViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         detailContactsView.fullNameTextLabel.text = fullName
-        detailContactsView.phoneNumberTextLabel.text = String(phoneNumber)
+        detailContactsView.phoneNumberTextLabel.text = phoneNumber
         detailContactsView.fullNameTextLabel.textColor = .systemBackground
         detailContactsView.phoneNumberTextLabel.textColor = .systemBackground
         detailContactsView.fullNameTextLabel.font = .systemFont(ofSize: 22)
