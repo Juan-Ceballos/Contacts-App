@@ -21,7 +21,7 @@ class CoreDataManager {
     
     public func createContact(firstName: String, lastName: String, email: String, poNumber: String, address: String) -> Contact {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
-        contact.firtName = firstName
+        contact.firstName = firstName
         contact.lastName = lastName
         contact.fullName = "\(firstName) \(lastName)"
         contact.email = email
@@ -40,7 +40,7 @@ class CoreDataManager {
     public func fetchContact() -> [Contact] {
         
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        let sort = NSSortDescriptor(key: #keyPath(Contact.firtName), ascending: true)
+        let sort = NSSortDescriptor(key: #keyPath(Contact.firstName), ascending: true)
         fetchRequest.sortDescriptors = [sort]
         
         do {
@@ -64,7 +64,7 @@ class CoreDataManager {
         var currentAlphabetSection = sectionTitles[currentIndex]
         
         for element in sortedContacts {
-            while element.firtName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
+            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }

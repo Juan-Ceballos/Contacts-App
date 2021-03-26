@@ -67,6 +67,7 @@ class AddContactView: UIView {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Digits"
         textField.autocorrectionType = .no
+        textField.keyboardType = .phonePad
         return textField
     }()
     
@@ -83,6 +84,7 @@ class AddContactView: UIView {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Johny@example.com"
         textField.autocorrectionType = .no
+        textField.keyboardType = .emailAddress
         return textField
     }()
     
@@ -131,6 +133,7 @@ class AddContactView: UIView {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Zip Code"
         textField.autocorrectionType = .no
+        textField.keyboardType = .numberPad
         return textField
     }()
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactsViewController: UIViewController {
 
@@ -24,6 +25,10 @@ class ContactsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+        
         view.backgroundColor = .systemBackground
         navigationItem.title = NSLocalizedString("Contacts", comment: "Title of the Navigation Bar")
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addContactButtonPressed))
@@ -32,6 +37,15 @@ class ContactsViewController: UIViewController {
         configureDataSource()
         fetchContacts()
         contactsView.contactsCollectionView.delegate = self
+    }
+    
+    @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+            configureDataSource()
+            fetchContacts()
+        }
     }
     
     @objc private func addContactButtonPressed() {
@@ -47,14 +61,13 @@ class ContactsViewController: UIViewController {
             
             cell.fullNameLabel.text = contact.fullName
             cell.numberLabel.text = contact.poNumber?.description
-            cell.initialsLabel.text = String(contact.firtName?.first?.uppercased() ?? " ") + String(contact.lastName?.first?.uppercased() ?? " ")
+            cell.initialsLabel.text = String(contact.firstName?.first?.uppercased() ?? " ") + String(contact.lastName?.first?.uppercased() ?? " ")
             return cell
         })
         
         var snapshot = datasource.snapshot()
         var sectionsArr = [SectionKind]()
-        //let sortedContacts = CoreDataManager.shared.fetchContact()
-        let sortedContacts = CoreDataManager.shared.sectionContacts()//Contact.alphebeticalContacts(contacts: contacts)
+        let sortedContacts = CoreDataManager.shared.sectionContacts()
         for num in 0...25 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
@@ -80,7 +93,6 @@ class ContactsViewController: UIViewController {
     }
     
     private func fetchContacts() {
-        //let contacts = CoreDataManager.shared.fetchContact()//ContactHC.createContactsArray()
         updateSnapshot()
     }
     
@@ -88,7 +100,7 @@ class ContactsViewController: UIViewController {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
         
-        let sortedContacts = CoreDataManager.shared.sectionContacts()//ContactHC.alphebeticalContacts(contacts: contacts)
+        let sortedContacts = CoreDataManager.shared.sectionContacts()
         var sectionsArr = [SectionKind]()
 
         for num in 0...25 {

@@ -17,7 +17,7 @@ extension Contact {
     }
 
     @NSManaged public var fullName: String?
-    @NSManaged public var firtName: String?
+    @NSManaged public var firstName: String?
     @NSManaged public var lastName: String?
     @NSManaged public var email: String?
     @NSManaged public var poNumber: String?

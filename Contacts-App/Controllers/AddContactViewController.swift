@@ -21,12 +21,6 @@ class AddContactViewController: UIViewController {
         setupTextField()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        //createContactHC()
-        
-    }
-    
-    private func createContactHC() {
-        _ = CoreDataManager.shared.createContact(firstName: "Juan", lastName: "Ceb", email: "JC@email.com", poNumber: "3478881249", address: "2701 GC Ave")
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -118,7 +112,29 @@ class AddContactViewController: UIViewController {
 
 extension AddContactViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        switch textField {
+        case addContactView.firstNameTextField:
+            addContactView.lastNameTextField.becomeFirstResponder()
+        case addContactView.lastNameTextField:
+            addContactView.poNumberTextField.becomeFirstResponder()
+        case addContactView.poNumberTextField:
+            print("no return key")
+        case addContactView.emailTextField:
+            addContactView.streetTextField.becomeFirstResponder()
+        case addContactView.streetTextField:
+            addContactView.aptTextField.becomeFirstResponder()
+        case addContactView.aptTextField:
+            addContactView.cityTextField.becomeFirstResponder()
+        case addContactView.cityTextField:
+            addContactView.stateTextField.becomeFirstResponder()
+        case addContactView.stateTextField:
+            addContactView.zipTextField.becomeFirstResponder()
+        case addContactView.zipTextField:
+            print("Last textfield")
+        default:
+            print("error on should return textfields")
+        }
+        return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
