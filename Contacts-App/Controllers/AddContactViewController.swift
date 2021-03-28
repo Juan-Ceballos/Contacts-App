@@ -69,8 +69,8 @@ class AddContactViewController: UIViewController {
     
     @objc func saveButtonPressed() {
         print("Save button pressed")
-        let arr = CoreDataManager.shared.fetchContact()
-        print(arr[0].fullName ?? "No Name")
+        //let arr = CoreDataManager.shared.fetchContact()
+        //print(arr[0].fullName ?? "No Name")
         guard let firstNameEntry = addContactView.firstNameTextField.text, !firstNameEntry.isEmpty,
               let lastNameEntry = addContactView.lastNameTextField.text, !lastNameEntry.isEmpty,
               let zipTextFieldEntry = addContactView.zipTextField.text, !zipTextFieldEntry.isEmpty,

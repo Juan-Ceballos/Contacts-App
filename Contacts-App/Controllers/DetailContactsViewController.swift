@@ -36,14 +36,7 @@ class DetailContactsViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         detailContactsView.fullNameTextLabel.text = fullName
-        detailContactsView.phoneNumberTextLabel.text = phoneNumber
-        detailContactsView.fullNameTextLabel.textColor = .systemBackground
-        detailContactsView.phoneNumberTextLabel.textColor = .systemBackground
-        detailContactsView.fullNameTextLabel.font = .systemFont(ofSize: 22)
-        detailContactsView.phoneNumberTextLabel.font = .systemFont(ofSize: 22)
-        detailContactsView.fullNameTextLabel.textAlignment = .center
-        detailContactsView.phoneNumberTextLabel.textAlignment = .center
-        
+        detailContactsView.phoneNumberTextLabel.text = phoneNumber        
     }
 
 }
