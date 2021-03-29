@@ -49,7 +49,7 @@ class ContactsViewController: UIViewController {
     }
     
     @objc private func addContactButtonPressed() {
-        navigationController?.pushViewController(AddContactViewController(), animated: true)
+        navigationController?.pushViewController(AddContactViewController(contactState: .newContact), animated: true)
     }
     
     private func configureDataSource() {
@@ -133,10 +133,7 @@ extension ContactsViewController: UICollectionViewDelegate {
             fatalError()
         }
         
-        let fullName = contact.fullName!
-        let phoneNumber = contact.poNumber!
-        
-        let detailContactsVC = DetailContactsViewController(fullName: fullName, phoneNumber: phoneNumber)
+        let detailContactsVC = DetailContactsViewController(contact: contact)
         
         self.navigationController?.pushViewController(detailContactsVC, animated: true)
     }

@@ -7,7 +7,25 @@
 
 import UIKit
 
+public enum ContactState {
+    case newContact
+    case editContact
+}
+
 class AddContactViewController: UIViewController {
+    
+    let contactState: ContactState
+    let contact: Contact?
+    
+    init(contactState: ContactState, contact: Contact? = nil) {
+        self.contactState = contactState
+        self.contact = contact
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     let addContactView = AddContactView()
     

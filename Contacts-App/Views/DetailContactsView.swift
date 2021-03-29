@@ -12,6 +12,7 @@ class DetailContactsView: UIView {
     override func layoutSubviews() {
         detailContainerViewContact.roundCorners()
         detailContainerViewAddress.roundCorners()
+        editButton.makeRounded()
     }
     
     public lazy var backgroundView: UIView = {
@@ -50,7 +51,8 @@ class DetailContactsView: UIView {
     
     public lazy var emailButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemTeal
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.backgroundColor = .white
         return button
     }()
     
@@ -63,20 +65,32 @@ class DetailContactsView: UIView {
     
     public lazy var messageButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .red
+        button.setImage(UIImage(systemName: "message.fill"), for: .normal)
+        button.tintColor = .systemPurple
         return button
     }()
     
     public lazy var mapButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.setImage(UIImage(systemName: "map.fill"), for: .normal)
         return button
     }()
     
     public lazy var editButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = .systemFill
+        button.setTitle("Edit", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 44)
+        button.setTitleColor(.systemBlue, for: .normal)
         return button
+    }()
+    
+    public lazy var addressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Address"
+        label.textColor = .systemBackground
+        label.font = .boldSystemFont(ofSize: 22)
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -100,6 +114,7 @@ class DetailContactsView: UIView {
         setupMapButtonConstraints()
         setupDetailContainerViewAddress()
         setupEditButtonConstraints()
+        setupAddressLabelConstraints()
     }
     
     private func setupBackgroundViewConstraints() {
@@ -213,8 +228,19 @@ class DetailContactsView: UIView {
         
             editButton.topAnchor.constraint(equalTo: detailContainerViewAddress.bottomAnchor, constant: 11),
             editButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            editButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.33),
+            editButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             editButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.11)
+        ])
+    }
+    
+    private func setupAddressLabelConstraints() {
+        addSubview(addressLabel)
+        addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            addressLabel.topAnchor.constraint(equalTo: detailContainerViewAddress.topAnchor, constant: 11),
+            addressLabel.leadingAnchor.constraint(equalTo: detailContainerViewAddress.leadingAnchor, constant: 11)
+        
         ])
     }
     

@@ -171,7 +171,6 @@ class AddContactView: UIView {
         setupCityTextFieldConstraints()
         setupStateTextFieldConstraints()
         setupZipTextFieldConstraints()
-        //setupSomeViewConstraints()
     }
     
     private func setupScrollViewConstraints() {
@@ -349,20 +348,6 @@ class AddContactView: UIView {
             zipTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 11),
             zipTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
             zipTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -11)
-        ])
-    }
-    
-    private func setupSomeViewConstraints() {
-        containerView.addSubview(someView)
-        someView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-        
-            someView.topAnchor.constraint(equalTo: zipTextField.bottomAnchor, constant: 11),
-            someView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 11),
-            someView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
-            someView.heightAnchor.constraint(equalToConstant: 200),
-            someView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -11)
-            
         ])
     }
     
