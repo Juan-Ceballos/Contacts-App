@@ -27,6 +27,8 @@ class CoreDataManager {
         contact.email = email
         contact.address = address
         contact.poNumber = poNumber
+        contact.dateCreated = Date()
+        contact.contactId = UUID()
         
         do {
             try context.save()
@@ -51,6 +53,28 @@ class CoreDataManager {
         }
         
         return sortedContacts
+    }
+    
+    public func updateContact(poNumber: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "poNumber = \(poNumber)")
+        
+        do {
+            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let foundContact = result![0]
+            print(foundContact.value(forKey: "firstName") ?? "first name fetch fail")
+            foundContact.setValue("Juanes", forKey: "firstName")
+            print(foundContact.value(forKey: "firstName") ?? "first name set value fail")
+        } catch  {
+            print("failed contact core data search")
+        }
+        
+        do {
+            try context.save()
+        } catch  {
+            print("failed save update")
+        }
+        
     }
     
     public func sectionContacts() -> [[Contact]] {

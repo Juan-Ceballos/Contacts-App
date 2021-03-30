@@ -41,6 +41,8 @@ class DetailContactsViewController: UIViewController {
     
     @objc private func editButtonPressed() {
         print("Button Pressed")
+        let addContactVC = AddContactViewController(contactState: .editContact, contact: contact)
+        self.navigationController?.pushViewController(addContactVC, animated: true)
     }
 
 }

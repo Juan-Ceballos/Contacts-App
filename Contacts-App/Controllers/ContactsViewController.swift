@@ -46,6 +46,11 @@ class ContactsViewController: UIViewController {
             configureDataSource()
             fetchContacts()
         }
+        
+        if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+            configureDataSource()
+            fetchContacts()
+        }
     }
     
     @objc private func addContactButtonPressed() {

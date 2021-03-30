@@ -87,8 +87,6 @@ class AddContactViewController: UIViewController {
     
     @objc func saveButtonPressed() {
         print("Save button pressed")
-        //let arr = CoreDataManager.shared.fetchContact()
-        //print(arr[0].fullName ?? "No Name")
         guard let firstNameEntry = addContactView.firstNameTextField.text, !firstNameEntry.isEmpty,
               let lastNameEntry = addContactView.lastNameTextField.text, !lastNameEntry.isEmpty,
               let zipTextFieldEntry = addContactView.zipTextField.text, !zipTextFieldEntry.isEmpty,
@@ -102,9 +100,27 @@ class AddContactViewController: UIViewController {
             return
         }
         
-        let newContact = CoreDataManager.shared.createContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry)
+        switch contactState {
+        case .newContact:
+            createNewContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry)
+        case .editContact:
+            editExistingContact(contact: contact!)
+        }
         
         self.navigationController?.popViewController(animated: true)
+        
+    }
+    
+    private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, address: String) {
+        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, address: address)
+        print(newContact.contactId?.uuidString ?? "No Id here")
+    }
+    
+    private func editExistingContact(contact: Contact) {
+        CoreDataManager.shared.updateContact(poNumber: contact.poNumber!)
+    }
+    
+    private func contactUIEntries() {
         
     }
     

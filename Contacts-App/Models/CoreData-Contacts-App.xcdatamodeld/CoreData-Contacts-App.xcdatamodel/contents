@@ -2,6 +2,8 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Contact" representedClassName=".Contact" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="contactId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="fullName" optional="YES" attributeType="String"/>
@@ -9,6 +11,6 @@
         <attribute name="poNumber" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="133"/>
+        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="163"/>
     </elements>
 </model>
