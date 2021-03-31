@@ -55,16 +55,15 @@ class CoreDataManager {
         return sortedContacts
     }
     
-    public func updateContact(poNumber: String) {
+    public func updateContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, address: String, email: String) {
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "poNumber = \(poNumber)")
+        fetchRequest.predicate = NSPredicate(format: "contactId == %@", "\(contactId.uuidString)")
         
         do {
             let result = try context.fetch(fetchRequest) as? [NSManagedObject]
             let foundContact = result![0]
-            print(foundContact.value(forKey: "firstName") ?? "first name fetch fail")
-            foundContact.setValue("Juanes", forKey: "firstName")
-            print(foundContact.value(forKey: "firstName") ?? "first name set value fail")
+            foundContact.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "address": address, "dateCreated": Date(), "email": email, "fullName": "\(firstName), \(lastName)"])
         } catch  {
             print("failed contact core data search")
         }

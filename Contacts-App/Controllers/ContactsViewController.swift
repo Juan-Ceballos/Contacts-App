@@ -28,7 +28,7 @@ class ContactsViewController: UIViewController {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         view.backgroundColor = .systemBackground
         navigationItem.title = NSLocalizedString("Contacts", comment: "Title of the Navigation Bar")
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addContactButtonPressed))
@@ -47,7 +47,8 @@ class ContactsViewController: UIViewController {
             fetchContacts()
         }
         
-        if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+        if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, edit.count > 0 {
+            print("an edit was made to a contact")
             configureDataSource()
             fetchContacts()
         }

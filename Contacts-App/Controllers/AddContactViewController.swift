@@ -104,7 +104,7 @@ class AddContactViewController: UIViewController {
         case .newContact:
             createNewContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry)
         case .editContact:
-            editExistingContact(contact: contact!)
+            editExistingContact(contactId: contact?.contactId ?? UUID(), firstName: firstNameEntry, lastName: lastNameEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry, email: emailTextFieldEntry)
         }
         
         self.navigationController?.popViewController(animated: true)
@@ -116,8 +116,8 @@ class AddContactViewController: UIViewController {
         print(newContact.contactId?.uuidString ?? "No Id here")
     }
     
-    private func editExistingContact(contact: Contact) {
-        CoreDataManager.shared.updateContact(poNumber: contact.poNumber!)
+    private func editExistingContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, address: String, email: String) {
+        CoreDataManager.shared.updateContact(contactId: contactId, firstName: firstName, lastName: lastName, poNumber: poNumber, address: address, email: email)
     }
     
     private func contactUIEntries() {
