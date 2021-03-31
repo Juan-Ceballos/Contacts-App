@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailContactsViewController: UIViewController {
     
@@ -30,6 +31,18 @@ class DetailContactsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         detailContactsView.editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+    }
+    
+    @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, edit.count > 0 {
+            print("an edit was made to a contact")
+            setupUI()
+        }
     }
     
     private func setupUI() {

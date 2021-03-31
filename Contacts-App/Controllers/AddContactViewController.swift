@@ -114,14 +114,12 @@ class AddContactViewController: UIViewController {
     private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, address: String) {
         let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, address: address)
         print(newContact.contactId?.uuidString ?? "No Id here")
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func editExistingContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, address: String, email: String) {
         CoreDataManager.shared.updateContact(contactId: contactId, firstName: firstName, lastName: lastName, poNumber: poNumber, address: address, email: email)
-    }
-    
-    private func contactUIEntries() {
-        
+
     }
     
     @objc func cancelButtonPressed() {
