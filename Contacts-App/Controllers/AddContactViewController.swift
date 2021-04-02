@@ -138,6 +138,18 @@ class AddContactViewController: UIViewController {
         addContactView.streetTextField.delegate = self
         addContactView.aptTextField.delegate = self
         addContactView.emailTextField.delegate = self
+        
+        if contactState == .editContact {
+            addContactView.firstNameTextField.text = contact?.firstName
+            addContactView.lastNameTextField.text = contact?.lastName
+            addContactView.zipTextField.text = "123456"
+            addContactView.stateTextField.text = "NY"
+            addContactView.cityTextField.text = "Bronx"
+            addContactView.poNumberTextField.text = contact?.poNumber
+            addContactView.streetTextField.text = contact?.address
+            addContactView.aptTextField.text = "A1"
+            addContactView.emailTextField.text = contact?.email
+        }
     }
     
 }
