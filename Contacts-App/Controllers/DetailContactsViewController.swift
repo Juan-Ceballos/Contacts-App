@@ -50,11 +50,11 @@ class DetailContactsViewController: UIViewController {
         detailContactsView.fullNameTextLabel.text = contact.fullName
         detailContactsView.phoneNumberTextLabel.text = contact.poNumber
         detailContactsView.emailButton.setTitle(contact.email, for: .normal)
-        detailContactsView.aptLabel.text = "A1"
-        detailContactsView.cityLabel.text = "Bronx"
-        detailContactsView.stateLabel.text = "NY"
-        detailContactsView.streetAddressLabel.text = contact.address
-        detailContactsView.zipCodeLabel.text = "123456"
+        detailContactsView.aptLabel.text = contact.apt
+        detailContactsView.cityLabel.text = contact.city
+        detailContactsView.stateLabel.text = contact.state
+        detailContactsView.streetAddressLabel.text = contact.street
+        detailContactsView.zipCodeLabel.text = contact.zipCode
     }
     
     @objc private func editButtonPressed() {

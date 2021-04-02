@@ -19,16 +19,20 @@ class CoreDataManager {
     
     // CRUD
     
-    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, address: String) -> Contact {
+    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String) -> Contact {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firstName = firstName
         contact.lastName = lastName
         contact.fullName = "\(firstName) \(lastName)"
         contact.email = email
-        contact.address = address
+        contact.street = street
         contact.poNumber = poNumber
         contact.dateCreated = Date()
         contact.contactId = UUID()
+        contact.apt = apt
+        contact.city = city
+        contact.state = state
+        contact.zipCode = zipCode
         
         do {
             try context.save()
@@ -55,7 +59,7 @@ class CoreDataManager {
         return sortedContacts
     }
     
-    public func updateContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, address: String, email: String) {
+    public func updateContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
         fetchRequest.predicate = NSPredicate(format: "contactId == %@", "\(contactId.uuidString)")
@@ -63,7 +67,7 @@ class CoreDataManager {
         do {
             let result = try context.fetch(fetchRequest) as? [NSManagedObject]
             let foundContact = result![0]
-            foundContact.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "address": address, "dateCreated": Date(), "email": email, "fullName": "\(firstName), \(lastName)"])
+            foundContact.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "street": street, "apt": apt, "city": city, "state": state, "zipCode": zipCode, "dateCreated": Date(), "email": email, "fullName": "\(firstName) \(lastName)"])
         } catch  {
             print("failed contact core data search")
         }

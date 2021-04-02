@@ -102,23 +102,23 @@ class AddContactViewController: UIViewController {
         
         switch contactState {
         case .newContact:
-            createNewContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry)
+            createNewContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, street: streetTextFieldEntry, apt: aptTextFieldEntry, zipCode: zipTextFieldEntry, city: cityTextFieldEntry, state: stateTextFieldEntry)
         case .editContact:
-            editExistingContact(contactId: contact?.contactId ?? UUID(), firstName: firstNameEntry, lastName: lastNameEntry, poNumber: poNumberTextFieldEntry, address: streetTextFieldEntry, email: emailTextFieldEntry)
+            editExistingContact(contactId: contact?.contactId ?? UUID(), firstName: firstNameEntry, lastName: lastNameEntry, poNumber: poNumberTextFieldEntry, street: streetTextFieldEntry, apt: aptTextFieldEntry, city: cityTextFieldEntry, state: stateTextFieldEntry, zipCode: zipTextFieldEntry, email: emailTextFieldEntry)
         }
         
         self.navigationController?.popViewController(animated: true)
         
     }
     
-    private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, address: String) {
-        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, address: address)
+    private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, zipCode: String, city: String, state: String) {
+        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode)
         print(newContact.contactId?.uuidString ?? "No Id here")
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func editExistingContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, address: String, email: String) {
-        CoreDataManager.shared.updateContact(contactId: contactId, firstName: firstName, lastName: lastName, poNumber: poNumber, address: address, email: email)
+    private func editExistingContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
+        CoreDataManager.shared.updateContact(contactId: contactId, firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
 
     }
     
@@ -142,12 +142,12 @@ class AddContactViewController: UIViewController {
         if contactState == .editContact {
             addContactView.firstNameTextField.text = contact?.firstName
             addContactView.lastNameTextField.text = contact?.lastName
-            addContactView.zipTextField.text = "123456"
-            addContactView.stateTextField.text = "NY"
-            addContactView.cityTextField.text = "Bronx"
+            addContactView.zipTextField.text = contact?.zipCode
+            addContactView.stateTextField.text = contact?.state
+            addContactView.cityTextField.text = contact?.city
             addContactView.poNumberTextField.text = contact?.poNumber
-            addContactView.streetTextField.text = contact?.address
-            addContactView.aptTextField.text = "A1"
+            addContactView.streetTextField.text = contact?.street
+            addContactView.aptTextField.text = contact?.apt
             addContactView.emailTextField.text = contact?.email
         }
     }
