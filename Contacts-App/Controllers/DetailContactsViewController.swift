@@ -34,6 +34,12 @@ class DetailContactsViewController: UIViewController {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
         NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+        detailContactsView.mapButton.addTarget(self, action: #selector(mapButtonPressed), for: .touchUpInside)
+        view.backgroundColor = .systemBackground
+    }
+    
+    @objc private func mapButtonPressed() {
+        navigationController?.pushViewController(MapViewController(), animated: true)
     }
     
     @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {

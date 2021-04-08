@@ -18,3 +18,7 @@ class Contacts_AppTests: XCTestCase {
         XCTAssertEqual(expContactsCount, contacts.count)
     }
 }
+
+// zip code formatter
+// po number
+// valid email

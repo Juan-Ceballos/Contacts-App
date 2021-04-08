@@ -74,6 +74,12 @@ class ContactsViewController: UIViewController {
         var snapshot = datasource.snapshot()
         var sectionsArr = [SectionKind]()
         let sortedContacts = CoreDataManager.shared.sectionContacts()
+        
+//        for (index, value) in SectionKind.allCases.enumerated() {
+//            if sortedContacts[index].count != 0 {
+//                sectionsArr.append(value)
+//            }
+//        }
         for num in 0...25 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)

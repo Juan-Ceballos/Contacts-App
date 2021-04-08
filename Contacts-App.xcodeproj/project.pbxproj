@@ -30,6 +30,8 @@
 		3ED046EE2615F65900D69559 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED046ED2615F65900D69559 /* UITextView+Extensions.swift */; };
 		3ED046F7261757AE00D69559 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED046F5261757AE00D69559 /* Contact+CoreDataClass.swift */; };
 		3ED046F8261757AE00D69559 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED046F6261757AE00D69559 /* Contact+CoreDataProperties.swift */; };
+		3ED046FD2617B31F00D69559 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED046FC2617B31F00D69559 /* MapViewController.swift */; };
+		3ED047022617B42B00D69559 /* CoreLocationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED047012617B42B00D69559 /* CoreLocationSession.swift */; };
 		3ED0E0A02600114500AB6131 /* DetailContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0E09F2600114500AB6131 /* DetailContactsView.swift */; };
 		3ED0E0A52600115E00AB6131 /* DetailContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0E0A42600115E00AB6131 /* DetailContactsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +83,8 @@
 		3ED046ED2615F65900D69559 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		3ED046F5261757AE00D69559 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3ED046F6261757AE00D69559 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3ED046FC2617B31F00D69559 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3ED047012617B42B00D69559 /* CoreLocationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationSession.swift; sourceTree = "<group>"; };
 		3ED0E09F2600114500AB6131 /* DetailContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContactsView.swift; sourceTree = "<group>"; };
 		3ED0E0A42600115E00AB6131 /* DetailContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContactsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,6 +174,7 @@
 				3E3A92CC2567029E00C4CFF4 /* ContactHC.swift */,
 				3ECF7D90260649B1002A6C1C /* CoreData-Contacts-App.xcdatamodeld */,
 				3ECF7DAA26065C03002A6C1C /* CoreDataManager.swift */,
+				3ED047012617B42B00D69559 /* CoreLocationSession.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				3E3A929A2567000800C4CFF4 /* ContactsViewController.swift */,
 				3ED0E0A42600115E00AB6131 /* DetailContactsViewController.swift */,
 				3E1F8A6025E9B24F0072195B /* AddContactViewController.swift */,
+				3ED046FC2617B31F00D69559 /* MapViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -363,10 +369,12 @@
 				3ECF7DC7260D0F69002A6C1C /* UIViewController+Alerts.swift in Sources */,
 				3ED0E0A52600115E00AB6131 /* DetailContactsViewController.swift in Sources */,
 				3E3A92972567000800C4CFF4 /* AppDelegate.swift in Sources */,
+				3ED047022617B42B00D69559 /* CoreLocationSession.swift in Sources */,
 				3ECF7DAB26065C03002A6C1C /* CoreDataManager.swift in Sources */,
 				3ECF7D92260649B2002A6C1C /* CoreData-Contacts-App.xcdatamodeld in Sources */,
 				3ED046F8261757AE00D69559 /* Contact+CoreDataProperties.swift in Sources */,
 				3E1F8A6625E9B3DA0072195B /* AddContactView.swift in Sources */,
+				3ED046FD2617B31F00D69559 /* MapViewController.swift in Sources */,
 				3E3A92DF25670F8D00C4CFF4 /* ContactsView.swift in Sources */,
 				3E1F8A6125E9B24F0072195B /* AddContactViewController.swift in Sources */,
 				3ECF7D6526054330002A6C1C /* UIImageView+Extensions.swift in Sources */,

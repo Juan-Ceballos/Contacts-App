@@ -17,7 +17,7 @@ class DetailContactsView: UIView {
     
     public lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -78,6 +78,7 @@ class DetailContactsView: UIView {
         button.setImage(UIImage(systemName: "map.fill"), for: .normal)
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
+        button.tintColor = .systemOrange
         return button
     }()
     
