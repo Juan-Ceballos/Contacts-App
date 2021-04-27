@@ -13,6 +13,7 @@ class DetailContactsView: UIView {
         detailContainerViewContact.roundCorners()
         detailContainerViewAddress.roundCorners()
         detailSettingsView.roundCorners()
+        profilePicture.makeRounded()
     }
     
     public lazy var backgroundView: UIView = {
@@ -147,6 +148,12 @@ class DetailContactsView: UIView {
         return button
     }()
     
+    public lazy var profilePicture: UIView = {
+        let iv = UIView()
+        iv.backgroundColor = .red
+        return iv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -159,6 +166,7 @@ class DetailContactsView: UIView {
     
     private func commonInit()   {
         setupBackgroundViewConstraints()
+        setupProfilePictureConstraints()
         setupDetailCointainerViewConstraints()
         setupFullNameTextLabelConstraints()
         setupPhoneNumberTextLabelConstraints()
@@ -190,13 +198,25 @@ class DetailContactsView: UIView {
         ])
     }
     
+    private func setupProfilePictureConstraints() {
+        addSubview(profilePicture)
+        profilePicture.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            profilePicture.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 22),
+            profilePicture.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            profilePicture.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1),
+            profilePicture.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1)
+        ])
+    }
+    
     private func setupDetailCointainerViewConstraints() {
         addSubview(detailContainerViewContact)
         detailContainerViewContact.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             detailContainerViewContact.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             detailContainerViewContact.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            detailContainerViewContact.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 22),
+            detailContainerViewContact.topAnchor.constraint(equalTo: profilePicture.centerYAnchor),
             detailContainerViewContact.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25)
         ])
     }
@@ -294,7 +314,7 @@ class DetailContactsView: UIView {
         addSubview(favoriteButton)
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            favoriteButton.centerXAnchor.constraint(equalTo: detailSettingsView.centerXAnchor),
+            favoriteButton.leadingAnchor.constraint(equalTo: detailSettingsView.leadingAnchor, constant: self.frame.size.width * 0.10),
             favoriteButton.centerYAnchor.constraint(equalTo: detailSettingsView.centerYAnchor),
             favoriteButton.widthAnchor.constraint(equalTo: mapButton.heightAnchor),
             favoriteButton.heightAnchor.constraint(equalTo: mapButton.heightAnchor)
@@ -307,7 +327,7 @@ class DetailContactsView: UIView {
         editButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             editButton.centerYAnchor.constraint(equalTo: favoriteButton.centerYAnchor),
-            editButton.trailingAnchor.constraint(equalTo: detailSettingsView.trailingAnchor, constant: -self.frame.size.width * 0.25),
+            editButton.centerXAnchor.constraint(equalTo: detailSettingsView.centerXAnchor),
             editButton.widthAnchor.constraint(equalTo: mapButton.heightAnchor),
             editButton.heightAnchor.constraint(equalTo: mapButton.heightAnchor)
         ])
@@ -327,8 +347,8 @@ class DetailContactsView: UIView {
         addSubview(streetAddressLabel)
         streetAddressLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            streetAddressLabel.bottomAnchor.constraint(equalTo: detailContainerViewAddress.centerYAnchor),
-            streetAddressLabel.trailingAnchor.constraint(equalTo: detailContainerViewAddress.centerXAnchor)
+            streetAddressLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 22),
+            streetAddressLabel.leadingAnchor.constraint(equalTo: detailContainerViewAddress.leadingAnchor, constant: 11)
         
         ])
     }
@@ -337,7 +357,7 @@ class DetailContactsView: UIView {
         addSubview(aptLabel)
         aptLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            aptLabel.bottomAnchor.constraint(equalTo: detailContainerViewAddress.centerYAnchor),
+            aptLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 22),
             aptLabel.leadingAnchor.constraint(equalTo: streetAddressLabel.trailingAnchor, constant: 11)
             
         ])
