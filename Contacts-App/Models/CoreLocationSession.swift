@@ -21,6 +21,35 @@ class CoreLocationSession: NSObject {
         locationManager.startUpdatingLocation()
     }
     
+    public func convertCoordinatesToPlacemark(coordinate: CLLocationCoordinate2D) {
+        // +40.74296,-73.94411 pursuit
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            if let error = error {
+                print("reverseGeocodeLocation: \(error)")
+            }
+            
+            if let firstPlacemark = placemarks?.first {
+                print("placemark info: \(firstPlacemark)")
+            }
+        }
+    }
+    
+    public func convertPlaceNameToCoordinates(addressString: String) {
+        CLGeocoder().geocodeAddressString(addressString) { (placemarks, error) in
+            if let error = error {
+                print("geocodeAddressString: \(error)")
+            }
+            
+            if let firstPlacemark = placemarks?.first, let location = firstPlacemark.location {
+                print("placename coordinate is \(location.coordinate)")
+            }
+        }
+        
+    }
+    
+    
+    
 }
 
 extension CoreLocationSession: CLLocationManagerDelegate {

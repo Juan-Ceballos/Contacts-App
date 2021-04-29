@@ -148,9 +148,10 @@ class DetailContactsView: UIView {
         return button
     }()
     
-    public lazy var profilePicture: UIView = {
-        let iv = UIView()
-        iv.backgroundColor = .red
+    public lazy var profilePicture: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "person.fill")
+        iv.contentMode = .scaleAspectFill
         return iv
     }()
     
@@ -227,7 +228,7 @@ class DetailContactsView: UIView {
         NSLayoutConstraint.activate([
             fullNameTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             fullNameTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            fullNameTextLabel.topAnchor.constraint(equalTo: detailContainerViewContact.topAnchor, constant: 11)
+            fullNameTextLabel.topAnchor.constraint(equalTo: profilePicture.bottomAnchor, constant: 11)
         ])
     }
     
@@ -237,7 +238,7 @@ class DetailContactsView: UIView {
         NSLayoutConstraint.activate([
             phoneNumberTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             phoneNumberTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            phoneNumberTextLabel.topAnchor.constraint(equalTo: fullNameTextLabel.bottomAnchor, constant: 13)
+            phoneNumberTextLabel.topAnchor.constraint(equalTo: fullNameTextLabel.bottomAnchor, constant: 11)
         
         ])
     }
@@ -258,7 +259,7 @@ class DetailContactsView: UIView {
         phoneImageButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             phoneImageButton.leadingAnchor.constraint(equalTo: detailContainerViewContact.leadingAnchor, constant: 22),
-            phoneImageButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -33),
+            phoneImageButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -22),
             phoneImageButton.heightAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12),
             phoneImageButton.widthAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12)
         
@@ -270,7 +271,7 @@ class DetailContactsView: UIView {
         messageButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             messageButton.centerXAnchor.constraint(equalTo: detailContainerViewContact.centerXAnchor),
-            messageButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -33),
+            messageButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -22),
             messageButton.heightAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12),
             messageButton.widthAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12)
         ])
@@ -280,8 +281,8 @@ class DetailContactsView: UIView {
         addSubview(mapButton)
         mapButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mapButton.trailingAnchor.constraint(equalTo: detailContainerViewContact.trailingAnchor, constant: -22),
-            mapButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -33),
+            mapButton.trailingAnchor.constraint(equalTo: detailContainerViewContact.trailingAnchor, constant: -33),
+            mapButton.bottomAnchor.constraint(equalTo: detailContainerViewContact.bottomAnchor, constant: -22),
             mapButton.heightAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12),
             mapButton.widthAnchor.constraint(equalTo: detailContainerViewContact.heightAnchor, multiplier: 0.12)
         ])
