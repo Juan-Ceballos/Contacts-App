@@ -23,33 +23,46 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        convertCoordinateToPlacemark()
-        convertPlaceNameToCoordinate()
+        convertPlaceNameToCoordinate("2701 grand concourse 6b bronx ny 10468")
         
-        mapView.mapView.showsUserLocation = true
+        //mapView.mapView.showsUserLocation = true
         mapView.mapView.delegate = self
         loadMapView()
     }
     
     private func makeAnnotations() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411)
-        annotation.title = "Pursuit"
+        locationSession.convertPlaceNameToCoordinates(addressString: "2701 grand concourse 6b bronx ny 10468") { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let coordinate):
+                annotation.coordinate = coordinate
+            }
+        }
+//        return convertPlaceNameToCoordinate("2701 grand concourse 6b bronx ny 10468")
+//        annotation.coordinate = CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411)
+        //annotation.title = "Place"
         return annotation
     }
     
     private func loadMapView() {
         let annotation = makeAnnotations()
         mapView.mapView.addAnnotation(annotation)
-        // mapview.showAnnotations
+        //mapview.showAnnotations
     }
     
-    private func convertCoordinateToPlacemark() {
-        locationSession.convertCoordinatesToPlacemark(coordinate: CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411))
-    }
-    
-    private func convertPlaceNameToCoordinate() {
-        locationSession.convertPlaceNameToCoordinates(addressString: "miami")
+    private func convertPlaceNameToCoordinate(_ placeName: String) {
+        locationSession.convertPlaceNameToCoordinates(addressString: placeName) { (result) in
+            switch result {
+            case .failure(let error):
+                print("geo coding error: \(error)")
+            case .success(let coordinate):
+                print("coordinate: \(coordinate)")
+                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1600, longitudinalMeters: 1600)
+                self.mapView.mapView.setRegion(region, animated: true)
+            }
+        }
     }
 
 }

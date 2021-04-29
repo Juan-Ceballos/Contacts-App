@@ -19,7 +19,7 @@ class CoreLocationSession: NSObject {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         startSignificantLocationChanges()
-        startMonitoringRegion()
+        //startMonitoringRegion()
     }
     
     private func startSignificantLocationChanges() {
@@ -44,14 +44,16 @@ class CoreLocationSession: NSObject {
         }
     }
     
-    public func convertPlaceNameToCoordinates(addressString: String) {
+    public func convertPlaceNameToCoordinates(addressString: String, completion: @escaping (Result<CLLocationCoordinate2D,Error>) -> ()) {
         CLGeocoder().geocodeAddressString(addressString) { (placemarks, error) in
             if let error = error {
                 print("geocodeAddressString: \(error)")
+                completion(.failure(error))
             }
             
             if let firstPlacemark = placemarks?.first, let location = firstPlacemark.location {
                 print("placename coordinate is \(location.coordinate)")
+                completion(.success(location.coordinate))
             }
         }
         
