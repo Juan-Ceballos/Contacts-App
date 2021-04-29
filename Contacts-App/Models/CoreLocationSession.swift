@@ -18,7 +18,16 @@ class CoreLocationSession: NSObject {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        startSignificantLocationChanges()
+        startMonitoringRegion()
+    }
+    
+    private func startSignificantLocationChanges() {
+        if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
+            return
+        }
+        
+        locationManager.startMonitoringSignificantLocationChanges()
     }
     
     public func convertCoordinatesToPlacemark(coordinate: CLLocationCoordinate2D) {
@@ -48,7 +57,14 @@ class CoreLocationSession: NSObject {
         
     }
     
-    
+    private func startMonitoringRegion() {
+        // +40.74296,-73.94411 pursuit
+        let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411), radius: 500, identifier: "monitoring region")
+        region.notifyOnEntry = true
+        region.notifyOnExit = false
+        locationManager.startMonitoring(for: region)
+        
+    }
     
 }
 
@@ -79,10 +95,10 @@ extension CoreLocationSession: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("didEnterRegion")
+        print("didEnterRegion: \(region)")
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("didExitRegion")
+        print("didExitRegion: \(region)")
     }
 }
