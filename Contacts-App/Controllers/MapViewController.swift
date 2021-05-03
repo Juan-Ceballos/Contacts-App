@@ -15,6 +15,16 @@ class MapViewController: UIViewController {
     
     private let locationSession = CoreLocationSession()
     private let geoCoder = CLGeocoder()
+    let contactLocation: String
+    
+    init(contactLocation: String) {
+        self.contactLocation = contactLocation
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     override func loadView() {
         view = mapView
@@ -23,8 +33,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        convertPlaceNameToCoordinate("2701 grand concourse 6b bronx ny 10468")
-        
+        convertPlaceNameToCoordinate(contactLocation)
         //mapView.mapView.showsUserLocation = true
         mapView.mapView.delegate = self
         loadMapView()
@@ -32,7 +41,7 @@ class MapViewController: UIViewController {
     
     private func makeAnnotations() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
-        locationSession.convertPlaceNameToCoordinates(addressString: "2701 grand concourse 6b bronx ny 10468") { (result) in
+        locationSession.convertPlaceNameToCoordinates(addressString: contactLocation) { (result) in
             switch result {
             case .failure(let error):
                 print(error)

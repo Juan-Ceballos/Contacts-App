@@ -39,7 +39,8 @@ class DetailContactsViewController: UIViewController {
     }
     
     @objc private func mapButtonPressed() {
-        navigationController?.pushViewController(MapViewController(), animated: true)
+        let mapViewController = MapViewController(contactLocation: "\(contact.street ?? "") \(contact.apt ?? "") \(contact.city ?? "") \(contact.state ?? "") \(contact.zipCode ?? "")")
+        navigationController?.pushViewController(mapViewController, animated: true)
     }
     
     @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
