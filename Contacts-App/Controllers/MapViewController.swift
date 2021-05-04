@@ -30,13 +30,34 @@ class MapViewController: UIViewController {
         view = mapView
     }
     
+    let request = MKDirections.Request()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        convertPlaceNameToCoordinate(contactLocation)
-        //mapView.mapView.showsUserLocation = true
         mapView.mapView.delegate = self
-        loadMapView()
+        view.backgroundColor = .systemBackground
+        //convertPlaceNameToCoordinate(contactLocation)
+        //loadMapView()
+        showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411), destinationCoordinate: CLLocationCoordinate2D(latitude: 40.829659, longitude: -73.926186))
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.829659, longitude: -73.926186), latitudinalMeters: 1600, longitudinalMeters: 1600)
+        self.mapView.mapView.setRegion(region, animated: true)
+    }
+    
+    func showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: pickupCoordinate, addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil))
+        request.requestsAlternateRoutes = true
+        request.transportType = .automobile
+        let directions = MKDirections(request: request)
+        directions.calculate { [unowned self] (response, error) in
+            guard let unwrappedResponse = response else {return}
+            if let route = unwrappedResponse.routes.first {
+                self.mapView.mapView.addOverlay(route.polyline)
+                self.mapView.mapView.setVisibleMapRect(mapView.mapView.visibleMapRect.union(route.polyline.boundingMapRect), edgePadding: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8), animated: true)
+            }
+            
+        }
     }
     
     private func makeAnnotations() -> MKPointAnnotation {
@@ -49,8 +70,6 @@ class MapViewController: UIViewController {
                 annotation.coordinate = coordinate
             }
         }
-//        return convertPlaceNameToCoordinate("2701 grand concourse 6b bronx ny 10468")
-//        annotation.coordinate = CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411)
         //annotation.title = "Place"
         return annotation
     }
@@ -68,7 +87,7 @@ class MapViewController: UIViewController {
                 print("geo coding error: \(error)")
             case .success(let coordinate):
                 print("coordinate: \(coordinate)")
-                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1600, longitudinalMeters: 1600)
+                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
                 self.mapView.mapView.setRegion(region, animated: true)
             }
         }
@@ -81,26 +100,33 @@ extension MapViewController: MKMapViewDelegate {
         print("did select")
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else {
-            return nil
-        }
-        
-        let identifier = "locAnnotation"
-        var annotationView: MKPinAnnotationView
-        
-        if let dequeueView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-            annotationView = dequeueView
-        } else {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView.canShowCallout = true
-        }
-        
-        return annotationView
-    }
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard annotation is MKPointAnnotation else {
+//            return nil
+//        }
+//
+//        let identifier = "locAnnotation"
+//        var annotationView: MKPinAnnotationView
+//
+//        if let dequeueView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+//            annotationView = dequeueView
+//        } else {
+//            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//            annotationView.canShowCallout = true
+//        }
+//
+//        return annotationView
+//    }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print("callout")
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        renderer.strokeColor = .systemGreen
+        renderer.lineWidth = 10.0
+        return renderer
     }
     
     
