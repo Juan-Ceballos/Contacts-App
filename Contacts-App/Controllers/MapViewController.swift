@@ -16,9 +16,11 @@ class MapViewController: UIViewController {
     private let locationSession = CoreLocationSession()
     private let geoCoder = CLGeocoder()
     let contactLocation: String
+    let userLocation: CLLocationCoordinate2D
     
     init(contactLocation: String) {
         self.contactLocation = contactLocation
+        self.userLocation = locationSession.locationManager.location!.coordinate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,13 +36,15 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(contactLocation)
+        print("user stuff")
+        print(locationSession.locationManager.location?.coordinate.latitude ?? 0)
+        
+        convertPlaceNameToCoordinate(contactLocation)
         mapView.mapView.delegate = self
         view.backgroundColor = .systemBackground
         //convertPlaceNameToCoordinate(contactLocation)
         //loadMapView()
-        showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D(latitude: 40.74296, longitude: -73.94411), destinationCoordinate: CLLocationCoordinate2D(latitude: 40.829659, longitude: -73.926186))
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.829659, longitude: -73.926186), latitudinalMeters: 1600, longitudinalMeters: 1600)
-        self.mapView.mapView.setRegion(region, animated: true)
     }
     
     func showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
@@ -86,9 +90,16 @@ class MapViewController: UIViewController {
             case .failure(let error):
                 print("geo coding error: \(error)")
             case .success(let coordinate):
-                print("coordinate: \(coordinate)")
-                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
-                self.mapView.mapView.setRegion(region, animated: true)
+                print("coordinate converted from place name: \(coordinate)")
+                self.showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D(latitude: self.userLocation.latitude, longitude: self.userLocation.longitude), destinationCoordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude))
+                let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), latitudinalMeters: 1600, longitudinalMeters: 1600)
+                DispatchQueue.main.async {
+                    self.mapView.mapView.setRegion(region, animated: true)
+
+                }
+                print("here: ")
+                print(self.mapView.mapView.userLocation.coordinate)
+                
             }
         }
     }
@@ -125,7 +136,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
         renderer.strokeColor = .systemGreen
-        renderer.lineWidth = 10.0
+        renderer.lineWidth = 3.0
         return renderer
     }
     

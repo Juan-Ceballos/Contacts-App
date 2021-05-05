@@ -26,7 +26,7 @@ class CoreLocationSession: NSObject {
         if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
             return
         }
-        
+        locationManager.startUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
     }
     
