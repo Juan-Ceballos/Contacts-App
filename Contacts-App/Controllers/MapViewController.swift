@@ -15,6 +15,9 @@ class MapViewController: UIViewController {
     
     private let locationSession = CoreLocationSession()
     private let geoCoder = CLGeocoder()
+    private var isShowingAnnotations = false
+    private var annotations = [MKPointAnnotation]()
+
     let contactLocation: String
     let userLocation: CLLocationCoordinate2D
     let contactFirstName: String
@@ -60,14 +63,13 @@ class MapViewController: UIViewController {
             guard let unwrappedResponse = response else {return}
             if let route = unwrappedResponse.routes.first {
                 self.mapView.mapView.addOverlay(route.polyline)
-                self.mapView.mapView.setVisibleMapRect(mapView.mapView.visibleMapRect.union(route.polyline.boundingMapRect), edgePadding: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8), animated: true)
+                self.mapView.mapView.setVisibleMapRect(mapView.mapView.visibleMapRect.union(route.polyline.boundingMapRect), edgePadding: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8), animated: false)
             }
             
         }
     }
     
     private func makeAnnotations() -> [MKPointAnnotation] {
-        var annotations = [MKPointAnnotation]()
         let contactAnnotation = MKPointAnnotation()
         let userAnnotation = MKPointAnnotation()
         
@@ -80,20 +82,25 @@ class MapViewController: UIViewController {
                 contactAnnotation.title = self.contactFirstName
                 print("first name: \(self.contactFirstName)")
                 print("contact coordinate for annotes: \(coordinate.latitude)")
+                let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), latitudinalMeters: 1600, longitudinalMeters: 1600)
+                self.mapView.mapView.setRegion(region, animated: true)
             }
         }
         userAnnotation.coordinate = userLocation
         userAnnotation.title = "You"
         annotations.append(userAnnotation)
         annotations.append(contactAnnotation)
-
+        isShowingAnnotations = true
+        
+        
+        
         return annotations
     }
     
     private func loadMapView() {
         let annotations = makeAnnotations()
         mapView.mapView.addAnnotations(annotations)
-        mapView.mapView.showAnnotations(annotations, animated: true)
+        mapView.mapView.showAnnotations(annotations, animated: false)
     }
     
     private func convertPlaceNameToCoordinate(_ placeName: String) {
@@ -104,11 +111,7 @@ class MapViewController: UIViewController {
             case .success(let coordinate):
                 print("coordinate converted from place name: \(coordinate)")
                 self.showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D(latitude: self.userLocation.latitude, longitude: self.userLocation.longitude), destinationCoordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), latitudinalMeters: 1600, longitudinalMeters: 1600)
-                DispatchQueue.main.async {
-                    self.mapView.mapView.setRegion(region, animated: true)
-
-                }
+                
                 print("here: ")
                 print(self.mapView.mapView.userLocation.coordinate)
                 
@@ -123,6 +126,13 @@ extension MapViewController: MKMapViewDelegate {
         renderer.strokeColor = .systemGreen
         renderer.lineWidth = 3.0
         return renderer
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        if isShowingAnnotations   {
+            mapView.showAnnotations(annotations, animated: false)
+        }
+        isShowingAnnotations = false
     }
     
 }

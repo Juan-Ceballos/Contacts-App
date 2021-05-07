@@ -196,8 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				3E3A929A2567000800C4CFF4 /* ContactsViewController.swift */,
-				3ED0E0A42600115E00AB6131 /* DetailContactsViewController.swift */,
 				3E1F8A6025E9B24F0072195B /* AddContactViewController.swift */,
+				3ED0E0A42600115E00AB6131 /* DetailContactsViewController.swift */,
 				3ED046FC2617B31F00D69559 /* MapViewController.swift */,
 			);
 			path = Controllers;
