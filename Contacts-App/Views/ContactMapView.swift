@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapView: UIView {
+class ContactMapView: UIView {
        
     public lazy var mapView: MKMapView = {
         let mV = MKMapView()

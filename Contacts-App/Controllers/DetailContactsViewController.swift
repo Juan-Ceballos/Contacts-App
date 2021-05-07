@@ -20,6 +20,12 @@ class DetailContactsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
+    private var selectedImage: UIImage? {
+        didSet {
+            detailContactsView.profilePicture.image = selectedImage
+        }
+    }
 
     let detailContactsView = DetailContactsView()
     
@@ -70,4 +76,14 @@ class DetailContactsViewController: UIViewController {
         self.navigationController?.pushViewController(addContactVC, animated: true)
     }
 
+}
+
+extension DetailContactsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        selectedImage = image
+        dismiss(animated: true)
+    }
 }
