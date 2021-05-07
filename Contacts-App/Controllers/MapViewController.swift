@@ -17,10 +17,12 @@ class MapViewController: UIViewController {
     private let geoCoder = CLGeocoder()
     let contactLocation: String
     let userLocation: CLLocationCoordinate2D
+    let contactFirstName: String
     
-    init(contactLocation: String) {
+    init(contactLocation: String, contactFirstName: String) {
         self.contactLocation = contactLocation
         self.userLocation = locationSession.locationManager.location!.coordinate
+        self.contactFirstName = contactFirstName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,7 +46,7 @@ class MapViewController: UIViewController {
         mapView.mapView.delegate = self
         view.backgroundColor = .systemBackground
         //convertPlaceNameToCoordinate(contactLocation)
-        //loadMapView()
+        loadMapView()
     }
     
     func showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
@@ -64,24 +66,34 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func makeAnnotations() -> MKPointAnnotation {
-        let annotation = MKPointAnnotation()
+    private func makeAnnotations() -> [MKPointAnnotation] {
+        var annotations = [MKPointAnnotation]()
+        let contactAnnotation = MKPointAnnotation()
+        let userAnnotation = MKPointAnnotation()
+        
         locationSession.convertPlaceNameToCoordinates(addressString: contactLocation) { (result) in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let coordinate):
-                annotation.coordinate = coordinate
+                contactAnnotation.coordinate = coordinate
+                contactAnnotation.title = self.contactFirstName
+                print("first name: \(self.contactFirstName)")
+                print("contact coordinate for annotes: \(coordinate.latitude)")
             }
         }
-        //annotation.title = "Place"
-        return annotation
+        userAnnotation.coordinate = userLocation
+        userAnnotation.title = "You"
+        annotations.append(userAnnotation)
+        annotations.append(contactAnnotation)
+
+        return annotations
     }
     
     private func loadMapView() {
-        let annotation = makeAnnotations()
-        mapView.mapView.addAnnotation(annotation)
-        //mapview.showAnnotations
+        let annotations = makeAnnotations()
+        mapView.mapView.addAnnotations(annotations)
+        mapView.mapView.showAnnotations(annotations, animated: true)
     }
     
     private func convertPlaceNameToCoordinate(_ placeName: String) {
@@ -103,42 +115,14 @@ class MapViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("did select")
-    }
-    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard annotation is MKPointAnnotation else {
-//            return nil
-//        }
-//
-//        let identifier = "locAnnotation"
-//        var annotationView: MKPinAnnotationView
-//
-//        if let dequeueView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-//            annotationView = dequeueView
-//        } else {
-//            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView.canShowCallout = true
-//        }
-//
-//        return annotationView
-//    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("callout")
-    }
-    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
         renderer.strokeColor = .systemGreen
         renderer.lineWidth = 3.0
         return renderer
     }
-    
     
 }

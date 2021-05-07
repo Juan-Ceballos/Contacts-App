@@ -39,7 +39,7 @@ class DetailContactsViewController: UIViewController {
     }
     
     @objc private func mapButtonPressed() {
-        let mapViewController = MapViewController(contactLocation: "\(contact.street ?? "") \(contact.apt ?? "") \(contact.city ?? "") \(contact.state ?? "") \(contact.zipCode ?? "")")
+        let mapViewController = MapViewController(contactLocation: "\(contact.street ?? "") \(contact.apt ?? "") \(contact.city ?? "") \(contact.state ?? "") \(contact.zipCode ?? "")", contactFirstName: contact.firstName ?? "")
         navigationController?.pushViewController(mapViewController, animated: true)
     }
     
