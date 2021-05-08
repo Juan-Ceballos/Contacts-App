@@ -21,6 +21,18 @@ class DetailContactsViewController: UIViewController {
         fatalError()
     }
     
+    private lazy var imagePickerController: UIImagePickerController = {
+        let ip = UIImagePickerController()
+        ip.delegate = self
+        return ip
+    }()
+    
+    public lazy var tapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(didTap(_:)))
+        return gesture
+    }()
+    
     private var selectedImage: UIImage? {
         didSet {
             detailContactsView.profilePicture.image = selectedImage
@@ -42,6 +54,8 @@ class DetailContactsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         detailContactsView.mapButton.addTarget(self, action: #selector(mapButtonPressed), for: .touchUpInside)
         view.backgroundColor = .systemBackground
+        detailContactsView.profilePicture.addGestureRecognizer(tapGesture)
+        detailContactsView.profilePicture.isUserInteractionEnabled = true
     }
     
     @objc private func mapButtonPressed() {
@@ -56,6 +70,38 @@ class DetailContactsViewController: UIViewController {
             print("an edit was made to a contact")
             setupUI()
         }
+    }
+    
+    @objc private func didTap(_ gesture: UITapGestureRecognizer)    {
+        print("tap")
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { alertAction in
+            self.showImageController(isCameraSelected: false)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { alertAction in
+            self.showImageController(isCameraSelected: false)
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alertController.addAction(cameraAction)
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(photoLibraryAction)
+        present(alertController, animated: true)
+    }
+    
+    private func showImageController(isCameraSelected: Bool)  {
+        // source type default wiil be .photoLibrary
+        imagePickerController.sourceType = .photoLibrary
+        if isCameraSelected {
+            imagePickerController.sourceType = .camera
+        }
+        present(imagePickerController, animated: true)
     }
     
     private func setupUI() {
