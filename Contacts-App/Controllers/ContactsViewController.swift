@@ -80,7 +80,7 @@ class ContactsViewController: UIViewController {
 //                sectionsArr.append(value)
 //            }
 //        }
-        for num in 0...25 {
+        for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
             }
@@ -115,14 +115,14 @@ class ContactsViewController: UIViewController {
         let sortedContacts = CoreDataManager.shared.sectionContacts()
         var sectionsArr = [SectionKind]()
 
-        for num in 0...25 {
+        for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
             }
         }
         snapshot.appendSections(sectionsArr)
         
-        for num in 0...25 {
+        for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 snapshot.appendItems(sortedContacts[num], toSection: SectionKind(rawValue: num))
             }

@@ -7,7 +7,8 @@
 
 import UIKit
 
-public enum SectionKind: Int, CaseIterable {    
+public enum SectionKind: Int, CaseIterable {
+    case favorite
     case a
     case b
     case c
@@ -37,6 +38,8 @@ public enum SectionKind: Int, CaseIterable {
     
     var sectionTitle: String {
         switch self {
+        case .favorite:
+            return "Favorite"
         case .a:
             return "A"
         case .b:
@@ -89,7 +92,6 @@ public enum SectionKind: Int, CaseIterable {
             return "Y"
         case .z:
             return "Z"
-            
         }
     }
 }

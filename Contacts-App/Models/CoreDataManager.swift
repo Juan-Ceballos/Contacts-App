@@ -19,7 +19,7 @@ class CoreDataManager {
     
     // CRUD
     
-    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String) -> Contact {
+    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool) -> Contact {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firstName = firstName
         contact.lastName = lastName
@@ -33,6 +33,7 @@ class CoreDataManager {
         contact.city = city
         contact.state = state
         contact.zipCode = zipCode
+        contact.isFavorite = isFavorite
         
         do {
             try context.save()
@@ -83,20 +84,24 @@ class CoreDataManager {
     public func sectionContacts() -> [[Contact]] {
         let sortedContacts = fetchContact()
         
-        let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        let sectionTitles: [String] = ["Favorites", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         
         var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
         
-        var currentIndex = 0
+        var currentIndex = 1
         var currentAlphabetSection = sectionTitles[currentIndex]
         
         for element in sortedContacts {
-            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
+            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 26 {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
+            if element.isFavorite {
+                sectionsArr[0].append(element)
+            }
             sectionsArr[currentIndex].append(element)
         }
+        
         return sectionsArr
         
     }

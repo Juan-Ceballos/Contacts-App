@@ -112,7 +112,7 @@ class AddContactViewController: UIViewController {
     }
     
     private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, zipCode: String, city: String, state: String) {
-        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode)
+        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: false)
         print(newContact.contactId?.uuidString ?? "No Id here")
         self.navigationController?.popViewController(animated: true)
     }

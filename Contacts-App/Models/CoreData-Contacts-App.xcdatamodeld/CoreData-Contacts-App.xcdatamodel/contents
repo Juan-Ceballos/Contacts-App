@@ -8,6 +8,8 @@
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="fullName" optional="YES" attributeType="String"/>
+        <attribute name="img" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
         <attribute name="poNumber" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="String"/>
@@ -15,6 +17,6 @@
         <attribute name="zipCode" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="223"/>
+        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="253"/>
     </elements>
 </model>

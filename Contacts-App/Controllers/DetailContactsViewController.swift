@@ -96,7 +96,6 @@ class DetailContactsViewController: UIViewController {
     }
     
     private func showImageController(isCameraSelected: Bool)  {
-        // source type default wiil be .photoLibrary
         imagePickerController.sourceType = .photoLibrary
         if isCameraSelected {
             imagePickerController.sourceType = .camera
@@ -121,7 +120,12 @@ class DetailContactsViewController: UIViewController {
         let addContactVC = AddContactViewController(contactState: .editContact, contact: contact)
         self.navigationController?.pushViewController(addContactVC, animated: true)
     }
-
+    
+    @objc private func favoriteButtonPressed() {
+        
+    }
+    
+    
 }
 
 extension DetailContactsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
