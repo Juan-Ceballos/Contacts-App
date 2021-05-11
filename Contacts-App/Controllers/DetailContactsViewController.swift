@@ -56,6 +56,7 @@ class DetailContactsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         detailContactsView.profilePicture.addGestureRecognizer(tapGesture)
         detailContactsView.profilePicture.isUserInteractionEnabled = true
+        detailContactsView.favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
     }
     
     @objc private func mapButtonPressed() {
@@ -122,7 +123,13 @@ class DetailContactsViewController: UIViewController {
     }
     
     @objc private func favoriteButtonPressed() {
-        
+        print("favorite button pressed")
+        print("\(contact.contactId?.description ?? "none")")
+        favoriteContact(contactID: contact.contactId ?? UUID(), isFavorite: true)
+    }
+    
+    private func favoriteContact(contactID: UUID, isFavorite: Bool) {
+        CoreDataManager.shared.favoriteContact(contactId: contactID, isFavorite: isFavorite)
     }
     
     

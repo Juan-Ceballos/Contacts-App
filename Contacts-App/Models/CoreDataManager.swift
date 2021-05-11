@@ -81,6 +81,25 @@ class CoreDataManager {
         
     }
     
+    public func favoriteContact(contactId: UUID, isFavorite: Bool) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "contactId == %@", "\(contactId.uuidString)")
+        
+        do {
+            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let foundContact = result![0]
+            foundContact.setValuesForKeys(["isFavorite": isFavorite])
+        } catch  {
+            print("failed contact core data search")
+        }
+        
+        do {
+            try context.save()
+        } catch  {
+            print("failed save update")
+        }
+    }
+    
     public func sectionContacts() -> [[Contact]] {
         let sortedContacts = fetchContact()
         

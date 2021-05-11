@@ -47,6 +47,8 @@ class ContactsViewController: UIViewController {
             fetchContacts()
         }
         
+        // [UIDiffableDataSource] Warning: 1 inserted identifier(s) already present; existing items will be moved into place for this current insertion. Please note this will impact performance if items are not unique when inserted.
+        // is favorite bool and a favorite id
         if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, edit.count > 0 {
             print("an edit was made to a contact")
             configureDataSource()
@@ -75,11 +77,6 @@ class ContactsViewController: UIViewController {
         var sectionsArr = [SectionKind]()
         let sortedContacts = CoreDataManager.shared.sectionContacts()
         
-//        for (index, value) in SectionKind.allCases.enumerated() {
-//            if sortedContacts[index].count != 0 {
-//                sectionsArr.append(value)
-//            }
-//        }
         for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
@@ -114,7 +111,7 @@ class ContactsViewController: UIViewController {
         
         let sortedContacts = CoreDataManager.shared.sectionContacts()
         var sectionsArr = [SectionKind]()
-
+                
         for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
@@ -127,7 +124,7 @@ class ContactsViewController: UIViewController {
                 snapshot.appendItems(sortedContacts[num], toSection: SectionKind(rawValue: num))
             }
         }
-        
+                
         datasource.apply(snapshot, animatingDifferences: false)
     }
     
