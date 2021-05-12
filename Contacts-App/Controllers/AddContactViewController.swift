@@ -104,7 +104,7 @@ class AddContactViewController: UIViewController {
         case .newContact:
             createNewContact(firstName: firstNameEntry, lastName: lastNameEntry, email: emailTextFieldEntry, poNumber: poNumberTextFieldEntry, street: streetTextFieldEntry, apt: aptTextFieldEntry, zipCode: zipTextFieldEntry, city: cityTextFieldEntry, state: stateTextFieldEntry)
         case .editContact:
-            editExistingContact(contactId: contact?.contactId ?? UUID(), firstName: firstNameEntry, lastName: lastNameEntry, poNumber: poNumberTextFieldEntry, street: streetTextFieldEntry, apt: aptTextFieldEntry, city: cityTextFieldEntry, state: stateTextFieldEntry, zipCode: zipTextFieldEntry, email: emailTextFieldEntry)
+            editExistingContact(firstName: firstNameEntry, lastName: lastNameEntry, poNumber: poNumberTextFieldEntry, street: streetTextFieldEntry, apt: aptTextFieldEntry, city: cityTextFieldEntry, state: stateTextFieldEntry, zipCode: zipTextFieldEntry, email: emailTextFieldEntry)
         }
         
         self.navigationController?.popViewController(animated: true)
@@ -113,12 +113,11 @@ class AddContactViewController: UIViewController {
     
     private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, zipCode: String, city: String, state: String) {
         let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: false)
-        print(newContact.contactId?.uuidString ?? "No Id here")
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func editExistingContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
-        CoreDataManager.shared.updateContact(contactId: contactId, firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
+    private func editExistingContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
+        CoreDataManager.shared.updateContact(firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
 
     }
     

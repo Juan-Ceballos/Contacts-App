@@ -29,13 +29,11 @@ class CoreDataManager {
         contact.street = street
         contact.poNumber = poNumber
         contact.dateCreated = Date()
-        contact.contactId = UUID()
         contact.apt = apt
         contact.city = city
         contact.state = state
         contact.zipCode = zipCode
         contact.isFavorite = isFavorite
-        contact.favId = nil
         do {
             try context.save()
         } catch {
@@ -45,16 +43,28 @@ class CoreDataManager {
         return contact
     }
     
-    
-    
-    public func updateContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "contactId == %@", "\(contactId.uuidString)")
+    public func createFavorite() -> Favorite {
+        let favorite = Favorite(entity: Favorite.entity(), insertInto: context)
+        favorite.dateCreated = Date()
         
         do {
-            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
-            let foundContact = result![0]
+            try context.save()
+        } catch {
+            print("error saving favorite to context: \(error)")
+        }
+        
+        return favorite
+    }
+    
+    public func updateContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
+        var objArray: [NSManagedObject]?
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "NOT (self IN %@)", argumentArray: objArray)
+        
+        do {
+            objArray = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let foundContact = objArray![0]
+        
             foundContact.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "street": street, "apt": apt, "city": city, "state": state, "zipCode": zipCode, "dateCreated": Date(), "email": email, "fullName": "\(firstName) \(lastName)"])
         } catch  {
             print("failed contact core data search")
@@ -65,76 +75,6 @@ class CoreDataManager {
         } catch  {
             print("failed save update")
         }
-        
-    }
-    
-    public func updateFavorite(contactId: UUID) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "contactId == %@ AND favId == nil", "\(contactId.uuidString)")
-        
-        do {
-            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
-            let foundContact = result![0]
-            if foundContact.value(forKeyPath: "isFavorite") as? Bool == false {
-                foundContact.setValue(true, forKey: "isFavorite")
-            } else {
-                foundContact.setValue(false, forKey: "isFavorite")
-            }
-        } catch {
-            print()
-        }
-        
-        do {
-            try context.save()
-        } catch  {
-            print("failed save update")
-        }
-
-    }
-    
-    public func createFavorite(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, contactId: UUID, favId: UUID) {
-        let contact = Contact(entity: Contact.entity(), insertInto: context)
-        contact.firstName = firstName
-        contact.lastName = lastName
-        contact.fullName = "\(firstName) \(lastName)"
-        contact.email = email
-        contact.street = street
-        contact.poNumber = poNumber
-        contact.dateCreated = Date()
-        contact.contactId = contactId
-        contact.apt = apt
-        contact.city = city
-        contact.state = state
-        contact.zipCode = zipCode
-        contact.isFavorite = isFavorite
-        contact.favId = favId
-        do {
-            try context.save()
-        } catch {
-            print("error saving to context, creating user: \(error)")
-        }
-        
-    }
-    
-    // give contact the fav and own id give faves just a fav id
-    public func removeFavorite(contactId: UUID) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "contactId == %@ AND isFavorite == TRUE", "\(contactId.uuidString)")
-        
-        do {
-            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
-            let foundFavorite = result![0]
-            context.delete(foundFavorite)
-        } catch {
-            print("")
-        }
-        
-        do {
-            try context.save()
-        } catch {
-            print("error saving to context, creating user: \(error)")
-        }
-        
     }
     
     public func fetchContact() -> [Contact] {
@@ -156,30 +96,25 @@ class CoreDataManager {
     public func sectionContacts() -> [[Contact]] {
         let sortedContacts = fetchContact()
         
-        let sectionTitles: [String] = ["Favorites", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         
         var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
         
-        var currentIndex = 1
+        var currentIndex = 0
         var currentAlphabetSection = sectionTitles[currentIndex]
         
         for element in sortedContacts {
-            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 26 {
+            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
-            
-            if element.isFavorite == true {
-                sectionsArr[0].append(element)
-            } else {
                 sectionsArr[currentIndex].append(element)
-            }
-    
         }
-        
         return sectionsArr
-        
     }
+    
+    // sectionFavorite
+    
 }
 
 
