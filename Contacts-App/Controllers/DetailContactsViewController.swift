@@ -118,6 +118,8 @@ class DetailContactsViewController: UIViewController {
         detailContactsView.stateLabel.text = contact.state
         detailContactsView.streetAddressLabel.text = contact.street
         detailContactsView.zipCodeLabel.text = contact.zipCode
+        
+        
     }
     
     @objc private func editButtonPressed() {
@@ -128,12 +130,26 @@ class DetailContactsViewController: UIViewController {
     
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
-        print("\(contact.contactId?.description ?? "none")")
-        favoriteContact(firstName: contact.firstName!, lastName: contact.lastName!, email: contact.email!, poNumber: contact.poNumber!, street: contact.street!, apt: contact.apt!, state: contact.state!, city: contact.city!, zipCode: contact.zipCode!, isFavorite: true, contactId: contact.contactId!, favId: UUID())
+        if contact.isFavorite == true {
+            updateFavorite(contactId: contact.contactId!)
+            removeFavorite(contactId: contact.contactId!)
+        } else {
+            print("\(contact.contactId?.description ?? "none")")
+            updateFavorite(contactId: contact.contactId!)
+            favoriteContact(firstName: contact.firstName!, lastName: contact.lastName!, email: contact.email!, poNumber: contact.poNumber!, street: contact.street!, apt: contact.apt!, state: contact.state!, city: contact.city!, zipCode: contact.zipCode!, isFavorite: true, contactId: contact.contactId!, favId: UUID())
+        }
     }
     
     private func favoriteContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, contactId: UUID, favId: UUID) {
         CoreDataManager.shared.createFavorite(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: isFavorite, contactId: contactId, favId: favId)
+    }
+    
+    private func updateFavorite(contactId: UUID) {
+        CoreDataManager.shared.updateFavorite(contactId: contactId)
+    }
+    
+    private func removeFavorite(contactId: UUID) {
+        CoreDataManager.shared.removeFavorite(contactId: contactId)
     }
     
     

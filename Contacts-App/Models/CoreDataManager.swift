@@ -68,6 +68,30 @@ class CoreDataManager {
         
     }
     
+    public func updateFavorite(contactId: UUID) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "contactId == %@ AND favId == nil", "\(contactId.uuidString)")
+        
+        do {
+            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let foundContact = result![0]
+            if foundContact.value(forKeyPath: "isFavorite") as? Bool == false {
+                foundContact.setValue(true, forKey: "isFavorite")
+            } else {
+                foundContact.setValue(false, forKey: "isFavorite")
+            }
+        } catch {
+            print()
+        }
+        
+        do {
+            try context.save()
+        } catch  {
+            print("failed save update")
+        }
+
+    }
+    
     public func createFavorite(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, contactId: UUID, favId: UUID) {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firstName = firstName
@@ -84,6 +108,27 @@ class CoreDataManager {
         contact.zipCode = zipCode
         contact.isFavorite = isFavorite
         contact.favId = favId
+        do {
+            try context.save()
+        } catch {
+            print("error saving to context, creating user: \(error)")
+        }
+        
+    }
+    
+    // give contact the fav and own id give faves just a fav id
+    public func removeFavorite(contactId: UUID) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "contactId == %@ AND isFavorite == TRUE", "\(contactId.uuidString)")
+        
+        do {
+            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let foundFavorite = result![0]
+            context.delete(foundFavorite)
+        } catch {
+            print("")
+        }
+        
         do {
             try context.save()
         } catch {
