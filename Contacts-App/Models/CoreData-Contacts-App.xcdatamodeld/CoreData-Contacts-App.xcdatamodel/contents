@@ -15,9 +15,7 @@
         <attribute name="street" optional="YES" attributeType="String"/>
         <attribute name="zipCode" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Favorite" representedClassName=".Favorite" parentEntity="Contact" syncable="YES"/>
     <elements>
         <element name="Contact" positionX="-7747.578125" positionY="-10063.91796875" width="128" height="238"/>
-        <element name="Favorite" positionX="-7548.140625" positionY="-9949.234375" width="128" height="43"/>
     </elements>
 </model>

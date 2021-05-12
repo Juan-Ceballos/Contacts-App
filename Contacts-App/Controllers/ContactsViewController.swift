@@ -109,12 +109,13 @@ class ContactsViewController: UIViewController {
         
         let sortedContacts = CoreDataManager.shared.sectionContacts()
         var sectionsArr = [SectionKind]()
-                
+        
         for num in 0...26 {
             if sortedContacts[num].count != 0 {
                 sectionsArr.append(SectionKind(rawValue: num)!)
             }
         }
+        
         snapshot.appendSections(sectionsArr)
         
         for num in 0...26 {

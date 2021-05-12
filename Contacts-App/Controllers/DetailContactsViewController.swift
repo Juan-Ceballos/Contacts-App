@@ -129,7 +129,6 @@ class DetailContactsViewController: UIViewController {
     
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
-        
     }
     
     private func favoriteContact() {

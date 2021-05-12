@@ -14,7 +14,6 @@ class CoreDataManager {
     private init() {}
     
     private var sortedContacts = [Contact]()
-    private var favorites = [Contact]()
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -41,19 +40,6 @@ class CoreDataManager {
         }
         
         return contact
-    }
-    
-    public func createFavorite() -> Favorite {
-        let favorite = Favorite(entity: Favorite.entity(), insertInto: context)
-        favorite.dateCreated = Date()
-        
-        do {
-            try context.save()
-        } catch {
-            print("error saving favorite to context: \(error)")
-        }
-        
-        return favorite
     }
     
     public func updateContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
@@ -87,24 +73,26 @@ class CoreDataManager {
             sortedContacts = try context.fetch(fetchRequest)
             
         } catch {
-            print("fetching contacts from context")
+            print("fetching contacts from context error")
         }
         
         return sortedContacts
     }
     
+    
+    
     public func sectionContacts() -> [[Contact]] {
         let sortedContacts = fetchContact()
         
-        let sectionTitles: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        let sectionTitles: [String] = ["Favorite", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         
         var sectionsArr = Array(repeating: [Contact](), count: sectionTitles.count)
         
-        var currentIndex = 0
+        var currentIndex = 1
         var currentAlphabetSection = sectionTitles[currentIndex]
         
         for element in sortedContacts {
-            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 25 {
+            while element.firstName?.first?.lowercased() != Character(currentAlphabetSection).lowercased() && currentIndex < 26 {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
@@ -112,9 +100,7 @@ class CoreDataManager {
         }
         return sectionsArr
     }
-    
-    // sectionFavorite
-    
+        
 }
 
 
