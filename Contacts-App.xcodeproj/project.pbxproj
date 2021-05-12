@@ -20,8 +20,8 @@
 		3E3A92DF25670F8D00C4CFF4 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A92DE25670F8D00C4CFF4 /* ContactsView.swift */; };
 		3E3A92EA256711CC00C4CFF4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A92E9256711CC00C4CFF4 /* ContactCell.swift */; };
 		3E61034D258C083100FD53D0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61034C258C083100FD53D0 /* HeaderView.swift */; };
-		3E64C6122649CECC00497707 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64C6102649CECC00497707 /* Contact+CoreDataClass.swift */; };
-		3E64C6132649CECC00497707 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64C6112649CECC00497707 /* Contact+CoreDataProperties.swift */; };
+		3E64C61F264B6DD400497707 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64C61D264B6DD400497707 /* Contact+CoreDataClass.swift */; };
+		3E64C620264B6DD400497707 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64C61E264B6DD400497707 /* Contact+CoreDataProperties.swift */; };
 		3E72F58E2591D0C10011AAA3 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72F58D2591D0C10011AAA3 /* FileManager.swift */; };
 		3E72F5932591D7080011AAA3 /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72F5922591D7080011AAA3 /* FileManager+Extensions.swift */; };
 		3ECF7D6526054330002A6C1C /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECF7D6426054330002A6C1C /* UIImageView+Extensions.swift */; };
@@ -74,8 +74,8 @@
 		3E3A92DE25670F8D00C4CFF4 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		3E3A92E9256711CC00C4CFF4 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		3E61034C258C083100FD53D0 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		3E64C6102649CECC00497707 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E64C6112649CECC00497707 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E64C61D264B6DD400497707 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E64C61E264B6DD400497707 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E72F58D2591D0C10011AAA3 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		3E72F5922591D7080011AAA3 /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		3ECF7D6426054330002A6C1C /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -171,8 +171,8 @@
 		3E3A92D1256702A500C4CFF4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3E64C6102649CECC00497707 /* Contact+CoreDataClass.swift */,
-				3E64C6112649CECC00497707 /* Contact+CoreDataProperties.swift */,
+				3E64C61D264B6DD400497707 /* Contact+CoreDataClass.swift */,
+				3E64C61E264B6DD400497707 /* Contact+CoreDataProperties.swift */,
 				3E3A92CC2567029E00C4CFF4 /* ContactHC.swift */,
 				3ECF7D90260649B1002A6C1C /* CoreData-Contacts-App.xcdatamodeld */,
 				3ECF7DAA26065C03002A6C1C /* CoreDataManager.swift */,
@@ -376,8 +376,8 @@
 				3ED047022617B42B00D69559 /* CoreLocationSession.swift in Sources */,
 				3ECF7DAB26065C03002A6C1C /* CoreDataManager.swift in Sources */,
 				3ECF7D92260649B2002A6C1C /* CoreData-Contacts-App.xcdatamodeld in Sources */,
-				3E64C6122649CECC00497707 /* Contact+CoreDataClass.swift in Sources */,
-				3E64C6132649CECC00497707 /* Contact+CoreDataProperties.swift in Sources */,
+				3E64C61F264B6DD400497707 /* Contact+CoreDataClass.swift in Sources */,
+				3E64C620264B6DD400497707 /* Contact+CoreDataProperties.swift in Sources */,
 				3E1F8A6625E9B3DA0072195B /* AddContactView.swift in Sources */,
 				3ED046FD2617B31F00D69559 /* MapViewController.swift in Sources */,
 				3E3A92DF25670F8D00C4CFF4 /* ContactsView.swift in Sources */,

@@ -47,8 +47,6 @@ class ContactsViewController: UIViewController {
             fetchContacts()
         }
         
-        // [UIDiffableDataSource] Warning: 1 inserted identifier(s) already present; existing items will be moved into place for this current insertion. Please note this will impact performance if items are not unique when inserted.
-        // is favorite bool and a favorite id
         if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, edit.count > 0 {
             print("an edit was made to a contact")
             configureDataSource()

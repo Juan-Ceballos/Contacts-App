@@ -67,6 +67,10 @@ class DetailContactsViewController: UIViewController {
     @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
         
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+            setupUI()
+        }
+        
         if let edit = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, edit.count > 0 {
             print("an edit was made to a contact")
             setupUI()
@@ -125,11 +129,11 @@ class DetailContactsViewController: UIViewController {
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
         print("\(contact.contactId?.description ?? "none")")
-        favoriteContact(contactID: contact.contactId ?? UUID(), isFavorite: true)
+        favoriteContact(firstName: contact.firstName!, lastName: contact.lastName!, email: contact.email!, poNumber: contact.poNumber!, street: contact.street!, apt: contact.apt!, state: contact.state!, city: contact.city!, zipCode: contact.zipCode!, isFavorite: true, contactId: contact.contactId!, favId: UUID())
     }
     
-    private func favoriteContact(contactID: UUID, isFavorite: Bool) {
-        CoreDataManager.shared.favoriteContact(contactId: contactID, isFavorite: isFavorite)
+    private func favoriteContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, contactId: UUID, favId: UUID) {
+        CoreDataManager.shared.createFavorite(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: isFavorite, contactId: contactId, favId: favId)
     }
     
     

@@ -6,6 +6,7 @@
         <attribute name="contactId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="favId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="fullName" optional="YES" attributeType="String"/>
         <attribute name="img" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
@@ -17,6 +18,6 @@
         <attribute name="zipCode" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="253"/>
+        <element name="Contact" positionX="-7679.6953125" positionY="-9942.48828125" width="128" height="268"/>
     </elements>
 </model>

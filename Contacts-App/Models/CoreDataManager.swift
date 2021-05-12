@@ -14,6 +14,7 @@ class CoreDataManager {
     private init() {}
     
     private var sortedContacts = [Contact]()
+    private var favorites = [Contact]()
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -34,7 +35,7 @@ class CoreDataManager {
         contact.state = state
         contact.zipCode = zipCode
         contact.isFavorite = isFavorite
-        
+        contact.favId = nil
         do {
             try context.save()
         } catch {
@@ -44,21 +45,7 @@ class CoreDataManager {
         return contact
     }
     
-    public func fetchContact() -> [Contact] {
-        
-        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        let sort = NSSortDescriptor(key: #keyPath(Contact.firstName), ascending: true)
-        fetchRequest.sortDescriptors = [sort]
-        
-        do {
-            sortedContacts = try context.fetch(fetchRequest)
-            
-        } catch {
-            print("fetching contacts from context")
-        }
-        
-        return sortedContacts
-    }
+    
     
     public func updateContact(contactId: UUID, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
         
@@ -81,23 +68,44 @@ class CoreDataManager {
         
     }
     
-    public func favoriteContact(contactId: UUID, isFavorite: Bool) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "contactId == %@", "\(contactId.uuidString)")
-        
-        do {
-            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
-            let foundContact = result![0]
-            foundContact.setValuesForKeys(["isFavorite": isFavorite])
-        } catch  {
-            print("failed contact core data search")
-        }
-        
+    public func createFavorite(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, contactId: UUID, favId: UUID) {
+        let contact = Contact(entity: Contact.entity(), insertInto: context)
+        contact.firstName = firstName
+        contact.lastName = lastName
+        contact.fullName = "\(firstName) \(lastName)"
+        contact.email = email
+        contact.street = street
+        contact.poNumber = poNumber
+        contact.dateCreated = Date()
+        contact.contactId = contactId
+        contact.apt = apt
+        contact.city = city
+        contact.state = state
+        contact.zipCode = zipCode
+        contact.isFavorite = isFavorite
+        contact.favId = favId
         do {
             try context.save()
-        } catch  {
-            print("failed save update")
+        } catch {
+            print("error saving to context, creating user: \(error)")
         }
+        
+    }
+    
+    public func fetchContact() -> [Contact] {
+        
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let sort = NSSortDescriptor(key: #keyPath(Contact.firstName), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
+        do {
+            sortedContacts = try context.fetch(fetchRequest)
+            
+        } catch {
+            print("fetching contacts from context")
+        }
+        
+        return sortedContacts
     }
     
     public func sectionContacts() -> [[Contact]] {
@@ -115,10 +123,13 @@ class CoreDataManager {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
-            if element.isFavorite {
+            
+            if element.isFavorite == true {
                 sectionsArr[0].append(element)
+            } else {
+                sectionsArr[currentIndex].append(element)
             }
-            sectionsArr[currentIndex].append(element)
+    
         }
         
         return sectionsArr
