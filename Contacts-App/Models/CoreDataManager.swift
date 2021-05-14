@@ -19,7 +19,7 @@ class CoreDataManager {
     
     // CRUD
     
-    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool) -> Contact {
+    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, isOriginal: Bool, refFav: UUID? = nil, refOrig: UUID? = nil) -> Contact {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firstName = firstName
         contact.lastName = lastName
@@ -33,6 +33,9 @@ class CoreDataManager {
         contact.state = state
         contact.zipCode = zipCode
         contact.isFavorite = isFavorite
+        contact.isOriginal = isOriginal
+        contact.refFav = refFav
+        contact.refOrig = refOrig
         do {
             try context.save()
         } catch {
@@ -42,19 +45,10 @@ class CoreDataManager {
         return contact
     }
     
-    public func updateContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
-        var objArray: [NSManagedObject]?
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "NOT (self IN %@)", argumentArray: objArray)
+    public func updateContact(contact: Contact, firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
+        let contactObject = context.object(with: contact.objectID)
         
-        do {
-            objArray = try context.fetch(fetchRequest) as? [NSManagedObject]
-            let foundContact = objArray![0]
-        
-            foundContact.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "street": street, "apt": apt, "city": city, "state": state, "zipCode": zipCode, "dateCreated": Date(), "email": email, "fullName": "\(firstName) \(lastName)"])
-        } catch  {
-            print("failed contact core data search")
-        }
+        contactObject.setValuesForKeys(["firstName": firstName, "lastName": lastName, "poNumber": poNumber, "street": street, "apt": apt, "city": city, "state": state, "zipCode": zipCode, "dateCreated": Date(), "email": email, "fullName": "\(firstName) \(lastName)"])
         
         do {
             try context.save()
@@ -64,7 +58,6 @@ class CoreDataManager {
     }
     
     public func fetchContact() -> [Contact] {
-        
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         let sort = NSSortDescriptor(key: #keyPath(Contact.firstName), ascending: true)
         fetchRequest.sortDescriptors = [sort]
@@ -96,11 +89,11 @@ class CoreDataManager {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
-                sectionsArr[currentIndex].append(element)
+            sectionsArr[currentIndex].append(element)
         }
         return sectionsArr
     }
-        
+    
 }
 
 

@@ -9,13 +9,16 @@
         <attribute name="fullName" optional="YES" attributeType="String"/>
         <attribute name="img" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isOriginal" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
         <attribute name="poNumber" optional="YES" attributeType="String"/>
+        <attribute name="refFav" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="refOrig" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="state" optional="YES" attributeType="String"/>
         <attribute name="street" optional="YES" attributeType="String"/>
         <attribute name="zipCode" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-7747.578125" positionY="-10063.91796875" width="128" height="238"/>
+        <element name="Contact" positionX="-7747.578125" positionY="-10063.91796875" width="128" height="283"/>
     </elements>
 </model>

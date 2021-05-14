@@ -57,6 +57,8 @@ class DetailContactsViewController: UIViewController {
         detailContactsView.profilePicture.addGestureRecognizer(tapGesture)
         detailContactsView.profilePicture.isUserInteractionEnabled = true
         detailContactsView.favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
+        print(contact.objectID.description)
+        print(contact.objectID)
     }
     
     @objc private func mapButtonPressed() {

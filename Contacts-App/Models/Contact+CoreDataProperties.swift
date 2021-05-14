@@ -2,7 +2,7 @@
 //  Contact+CoreDataProperties.swift
 //  Contacts-App
 //
-//  Created by Juan Ceballos on 5/12/21.
+//  Created by Juan Ceballos on 5/13/21.
 //
 //
 
@@ -29,6 +29,9 @@ extension Contact {
     @NSManaged public var zipCode: String?
     @NSManaged public var img: Data?
     @NSManaged public var isFavorite: Bool
+    @NSManaged public var isOriginal: Bool
+    @NSManaged public var refOrig: UUID?
+    @NSManaged public var refFav: UUID?
 
 }
 

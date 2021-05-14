@@ -112,13 +112,13 @@ class AddContactViewController: UIViewController {
     }
     
     private func createNewContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, zipCode: String, city: String, state: String) {
-        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: false)
+        let newContact = CoreDataManager.shared.createContact(firstName: firstName, lastName: lastName, email: email, poNumber: poNumber, street: street, apt: apt, state: state, city: city, zipCode: zipCode, isFavorite: false, isOriginal: true)
         self.navigationController?.popViewController(animated: true)
     }
     
     private func editExistingContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
-        CoreDataManager.shared.updateContact(firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
-
+        CoreDataManager.shared.updateContact(contact: contact!, firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
+        
     }
     
     @objc func cancelButtonPressed() {
