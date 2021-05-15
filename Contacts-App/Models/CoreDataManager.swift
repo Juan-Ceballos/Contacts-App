@@ -57,6 +57,50 @@ class CoreDataManager {
         }
     }
     
+    
+    public func favoriteContact(contact: Contact) {
+        let contactObject = context.object(with: contact.objectID)
+        
+        contactObject.setValuesForKeys(["isFavorite": true, "refOrig": UUID()])
+        
+        do {
+            try context.save()
+        } catch {
+            print("failed to update isFavorite on original contact")
+        }
+    }
+    
+    public func createFavoriteContact(contact: Contact, isFavorite: Bool, isOriginal: Bool, refFav: UUID? = nil) -> Contact {
+        
+        let originalContact = context.object(with: contact.objectID)
+        originalContact.setValue(UUID(), forKey: "refOrig")
+        
+        let contactFavorite = Contact(entity: Contact.entity(), insertInto: context)
+        contactFavorite.firstName = contact.firstName
+        contactFavorite.lastName = contact.lastName
+        contactFavorite.fullName = "\(contact.firstName ?? "") \(contact.lastName ?? "")"
+        contactFavorite.email = contact.email
+        contactFavorite.street = contact.street
+        contactFavorite.poNumber = contact.poNumber
+        contactFavorite.dateCreated = Date()
+        contactFavorite.apt = contact.apt
+        contactFavorite.city = contact.city
+        contactFavorite.state = contact.state
+        contactFavorite.zipCode = contact.zipCode
+        contactFavorite.isFavorite = isFavorite
+        contactFavorite.isOriginal = isOriginal
+        contactFavorite.refFav = refFav
+        contactFavorite.refOrig = contact.refOrig
+        
+        do {
+            try context.save()
+        } catch {
+            print("error saving to context, creating user: \(error)")
+        }
+        
+        return contact
+    }
+    
     public func fetchContact() -> [Contact] {
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         let sort = NSSortDescriptor(key: #keyPath(Contact.firstName), ascending: true)
@@ -89,7 +133,12 @@ class CoreDataManager {
                 currentIndex += 1
                 currentAlphabetSection = sectionTitles[currentIndex]
             }
-            sectionsArr[currentIndex].append(element)
+            
+            if element.isFavorite == true && element.isOriginal == false {
+                sectionsArr[0].append(element)
+            } else {
+                sectionsArr[currentIndex].append(element)
+            }
         }
         return sectionsArr
     }

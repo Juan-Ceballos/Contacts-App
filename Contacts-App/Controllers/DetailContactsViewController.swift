@@ -131,6 +131,8 @@ class DetailContactsViewController: UIViewController {
     
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
+        CoreDataManager.shared.favoriteContact(contact: contact)
+        let newFavContact = CoreDataManager.shared.createFavoriteContact(contact: contact, isFavorite: true, isOriginal: false)
     }
     
     private func favoriteContact() {

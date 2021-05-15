@@ -118,7 +118,6 @@ class AddContactViewController: UIViewController {
     
     private func editExistingContact(firstName: String, lastName: String, poNumber: String, street: String, apt: String, city: String, state: String, zipCode: String, email: String) {
         CoreDataManager.shared.updateContact(contact: contact!, firstName: firstName, lastName: lastName, poNumber: poNumber, street: street, apt: apt, city: city, state: state, zipCode: zipCode, email: email)
-        
     }
     
     @objc func cancelButtonPressed() {
@@ -184,7 +183,6 @@ extension AddContactViewController: UITextFieldDelegate {
         if textField != addContactView.zipTextField {
             addContactView.scrollView.contentInset = UIEdgeInsets.zero
         }
-        
     }
     
 }
