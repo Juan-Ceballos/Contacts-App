@@ -124,7 +124,11 @@ class DetailContactsViewController: UIViewController {
         detailContactsView.stateLabel.text = contact.state
         detailContactsView.streetAddressLabel.text = contact.street
         detailContactsView.zipCodeLabel.text = contact.zipCode
-        
+        if contact.isFavorite == true {
+            detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
     }
     
     @objc private func editButtonPressed() {
@@ -136,24 +140,14 @@ class DetailContactsViewController: UIViewController {
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
         if contact.isFavorite == true {
+            detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            CoreDataManager.shared.unfavoriteContact(contact: contact)
             CoreDataManager.shared.deleteFavoriteContact(contact: contact)
         } else {
+            detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             CoreDataManager.shared.favoriteContact(contact: contact)
             let newFavContact = CoreDataManager.shared.createFavoriteContact(contact: contact, isFavorite: true, isOriginal: false)
         }
-        
-    }
-    
-    private func favoriteContact() {
-        
-    }
-    
-    private func updateFavorite() {
-        
-    }
-    
-    private func removeFavorite() {
-        
     }
     
     

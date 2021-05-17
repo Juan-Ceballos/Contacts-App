@@ -75,7 +75,6 @@ class CoreDataManager {
         }
     }
     
-    
     public func favoriteContact(contact: Contact) {
         let contactObject = context.object(with: contact.objectID)
         
@@ -85,6 +84,17 @@ class CoreDataManager {
             try context.save()
         } catch {
             print("failed to update isFavorite on original contact")
+        }
+    }
+    
+    public func unfavoriteContact(contact: Contact) {
+        let contactObject = context.object(with: contact.objectID)
+        contactObject.setValue(false, forKey: "isFavorite")
+        
+        do {
+            try context.save()
+        } catch {
+            print("error unfavorite")
         }
     }
     
