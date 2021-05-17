@@ -91,6 +91,19 @@ class CoreDataManager {
         let contactObject = context.object(with: contact.objectID)
         contactObject.setValue(false, forKey: "isFavorite")
         
+        if contact.isOriginal == false {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+            fetchRequest.predicate = NSPredicate(format: "refOrig == %@ && isOriginal == TRUE", "\(contact.refOrig?.uuidString ?? "")")
+            do {
+                let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+                let origContact = result![0]
+                origContact.setValuesForKeys(["isFavorite": false])
+            } catch {
+                print("")
+            }
+            
+        }
+        
         do {
             try context.save()
         } catch {

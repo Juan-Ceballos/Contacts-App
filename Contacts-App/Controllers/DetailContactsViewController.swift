@@ -143,6 +143,9 @@ class DetailContactsViewController: UIViewController {
             detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
             CoreDataManager.shared.unfavoriteContact(contact: contact)
             CoreDataManager.shared.deleteFavoriteContact(contact: contact)
+            if contact.isOriginal == false {
+                navigationController?.popViewController(animated: true)
+            }
         } else {
             detailContactsView.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             CoreDataManager.shared.favoriteContact(contact: contact)
