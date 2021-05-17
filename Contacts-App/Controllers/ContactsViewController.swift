@@ -52,6 +52,11 @@ class ContactsViewController: UIViewController {
             configureDataSource()
             fetchContacts()
         }
+        
+        if let delete = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, delete.count > 0 {
+            configureDataSource()
+            fetchContacts()
+        }
     }
     
     @objc private func addContactButtonPressed() {

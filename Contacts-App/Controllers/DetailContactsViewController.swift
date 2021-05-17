@@ -77,6 +77,10 @@ class DetailContactsViewController: UIViewController {
             print("an edit was made to a contact")
             setupUI()
         }
+        
+        if let delete = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, delete.count > 0 {
+            setupUI()
+        }
     }
     
     @objc private func didTap(_ gesture: UITapGestureRecognizer)    {
@@ -131,8 +135,13 @@ class DetailContactsViewController: UIViewController {
     
     @objc private func favoriteButtonPressed() {
         print("favorite button pressed")
-        CoreDataManager.shared.favoriteContact(contact: contact)
-        let newFavContact = CoreDataManager.shared.createFavoriteContact(contact: contact, isFavorite: true, isOriginal: false)
+        if contact.isFavorite == true {
+            CoreDataManager.shared.deleteFavoriteContact(contact: contact)
+        } else {
+            CoreDataManager.shared.favoriteContact(contact: contact)
+            let newFavContact = CoreDataManager.shared.createFavoriteContact(contact: contact, isFavorite: true, isOriginal: false)
+        }
+        
     }
     
     private func favoriteContact() {

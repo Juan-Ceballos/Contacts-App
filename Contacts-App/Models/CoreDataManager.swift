@@ -19,7 +19,7 @@ class CoreDataManager {
     
     // CRUD
     
-    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, isOriginal: Bool, refFav: UUID? = nil, refOrig: UUID? = nil) -> Contact {
+    public func createContact(firstName: String, lastName: String, email: String, poNumber: String, street: String, apt: String, state: String, city: String, zipCode: String, isFavorite: Bool, isOriginal: Bool, refFav: UUID? = nil) -> Contact {
         let contact = Contact(entity: Contact.entity(), insertInto: context)
         contact.firstName = firstName
         contact.lastName = lastName
@@ -35,7 +35,7 @@ class CoreDataManager {
         contact.isFavorite = isFavorite
         contact.isOriginal = isOriginal
         contact.refFav = refFav
-        contact.refOrig = refOrig
+        contact.refOrig = UUID()
         do {
             try context.save()
         } catch {
@@ -57,11 +57,29 @@ class CoreDataManager {
         }
     }
     
+    public func deleteFavoriteContact(contact: Contact) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        fetchRequest.predicate = NSPredicate(format: "refFav == %@ && isOriginal == FALSE", "\(contact.refFav?.uuidString ?? "")")
+        do {
+            let result = try context.fetch(fetchRequest) as? [NSManagedObject]
+            let favoriteContact = result![0]
+            context.delete(favoriteContact)
+        } catch {
+            print("error deleting favorite contact")
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            print("")
+        }
+    }
+    
     
     public func favoriteContact(contact: Contact) {
         let contactObject = context.object(with: contact.objectID)
         
-        contactObject.setValuesForKeys(["isFavorite": true, "refOrig": UUID()])
+        contactObject.setValuesForKeys(["isFavorite": true, "refFav": UUID()])
         
         do {
             try context.save()
@@ -70,10 +88,7 @@ class CoreDataManager {
         }
     }
     
-    public func createFavoriteContact(contact: Contact, isFavorite: Bool, isOriginal: Bool, refFav: UUID? = nil) -> Contact {
-        
-        let originalContact = context.object(with: contact.objectID)
-        originalContact.setValue(UUID(), forKey: "refOrig")
+    public func createFavoriteContact(contact: Contact, isFavorite: Bool, isOriginal: Bool) -> Contact {
         
         let contactFavorite = Contact(entity: Contact.entity(), insertInto: context)
         contactFavorite.firstName = contact.firstName
@@ -89,7 +104,7 @@ class CoreDataManager {
         contactFavorite.zipCode = contact.zipCode
         contactFavorite.isFavorite = isFavorite
         contactFavorite.isOriginal = isOriginal
-        contactFavorite.refFav = refFav
+        contactFavorite.refFav = contact.refFav
         contactFavorite.refOrig = contact.refOrig
         
         do {
