@@ -16,7 +16,7 @@ details here
 
 ### Browse Contacts
 
-Normal Mode | Not Afraid of the Dark...Mode
+Normal Mode            | Not Afraid of the Dark...Mode
 ---------------------- | -----------------------
 
 
