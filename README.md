@@ -10,10 +10,11 @@ Contacts-App allows users to create, browse, favorite and edit contacts.
 
 ### Create Contacts
 
+![CreateContact](Contacts-App/SupportingFiles/Assets.xcassets/CreateContact.imageset/CreateContact.png)
 
 ### Contact Details, Edit/Favorite
 
-![CreateContact](Contacts-App/SupportingFiles/Assets.xcassets/CreateContact.imageset/CreateContact.png)
+![DetailContact](Contacts-App/SupportingFiles/Assets.xcassets/DetailContact.imageset/DetailContact.png)
 
 ### Browse Contacts
 
