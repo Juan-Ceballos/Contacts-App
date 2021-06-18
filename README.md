@@ -18,7 +18,7 @@ details here
 
 Normal Mode            | Not Afraid of the Dark...Mode
 ---------------------- | -----------------------
-![Contacts](Contacts-App/SupportingFiles/Assets.xcassets/Contacts.imageset/Contacts.png) | ![ContactDark](Contacts-App/SupportingFiles/Assets.xcassets/ContactsDark.imageset/ContactsDark.png)
+![Contacts](Contacts-App/SupportingFiles/Assets.xcassets/Contacts.imageset/Contacts.png) | ![ContactsDark](Contacts-App/SupportingFiles/Assets.xcassets/ContactsDark.imageset/ContactsDark.png)
 
 ## Code Block
 
