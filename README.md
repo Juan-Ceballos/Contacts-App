@@ -10,7 +10,6 @@ Contacts-App allows users to create, browse, favorite and edit contacts.
 
 ### Create Contacts
 
-details here
 
 ### Contact Details, Edit/Favorite
 
