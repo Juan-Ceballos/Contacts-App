@@ -130,6 +130,8 @@ class CoreDataManager {
         contactFavorite.refFav = contact.refFav
         contactFavorite.refOrig = contact.refOrig
         
+        // creating from scratch or recreating from pressing on contact from fav section
+        
         do {
             try context.save()
         } catch {

@@ -95,8 +95,9 @@ class AddContactViewController: UIViewController {
               let poNumberTextFieldEntry = addContactView.poNumberTextField.text, !poNumberTextFieldEntry.isEmpty,
               let streetTextFieldEntry = addContactView.streetTextField.text, !streetTextFieldEntry.isEmpty,
               let aptTextFieldEntry = addContactView.aptTextField.text, !aptTextFieldEntry.isEmpty,
-              let emailTextFieldEntry = addContactView.emailTextField.text, !emailTextFieldEntry.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing Fields")
+              let emailTextFieldEntry = addContactView.emailTextField.text, !emailTextFieldEntry.isEmpty
+        else {
+            self.showAlert(title: "Error", message: "Missing Fields, or Invalid Entry")
             return
         }
         
@@ -183,6 +184,13 @@ extension AddContactViewController: UITextFieldDelegate {
         if textField != addContactView.zipTextField {
             addContactView.scrollView.contentInset = UIEdgeInsets.zero
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == addContactView.poNumberTextField {
+            
+        }
+        return true
     }
     
 }
