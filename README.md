@@ -2,17 +2,22 @@
 
 ## Overview
 
-App overview here
+Contacts-App allows users to create, browse, favorite and edit contacts.
 
-### Darkmode
-
-images here
 
 ## Features
 
-### Feature Subheaders
+
+### Create Contacts
 
 details here
+
+### Contact Details, Edit/Favorite
+
+### Browse Contacts
+
+Normal Mode | Not Afraid of the Dark...Mode
+---------------------- | -----------------------
 
 
 ## Code Block
